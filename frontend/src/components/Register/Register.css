@@ -1,0 +1,59 @@
+.register-centralizar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-main {
+  display: grid;
+  row-gap: 6px;
+  justify-items: center;
+  grid-template-columns: 1fr;
+}
+
+.register-title {
+  color:rgb(100, 100, 100); 
+}
+
+.register-input-data	{
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  width:300px;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+
+.register-input-data:focus { 
+  outline:none; 
+}
+
+.register-btn {
+  background-color: #757575;
+  color: rgba(256,256,256,0.7);
+  border:0;
+  border-radius: 15px;
+  margin: 15px auto; 
+  padding: 15px 45px;
+  width: 100%;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-btn:focus { 
+  outline:none; 
+}
+
+.register-btn:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.register-btn:hover:active {
+  background-color: #757575;
+}
+

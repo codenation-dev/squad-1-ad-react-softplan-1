@@ -10,6 +10,7 @@ const Login = () => {
         <input className="login-input-data" type="password" placeholder="password"></input>
         <button className="login-btn">Login</button>
         <a href="/">Esqueci a senha</a>
+        <a href="/">Cadastrar</a>
       </div>
     </div>
   );
