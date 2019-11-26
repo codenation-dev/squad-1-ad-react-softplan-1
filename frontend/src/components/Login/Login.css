@@ -16,10 +16,11 @@
   grid-template-columns: 1fr;
 }
 
-h1 {
+.login-title {
   color:rgb(100, 100, 100); 
 }
-input	{
+
+.login-input-data	{
   font-size:18px;
   padding:10px 10px 10px 5px;
   width:300px;
@@ -27,11 +28,11 @@ input	{
   border-bottom:1px solid #757575;
 }
 
-input:focus { 
+.login-input-data:focus { 
   outline:none; 
 }
 
-.submit-btn {
+.login-btn {
   background-color: #757575;
   color: rgba(256,256,256,0.7);
   border:0;
@@ -44,14 +45,15 @@ input:focus {
   cursor: pointer;
 }
 
-.submit-btn:focus { 
+.login-btn:focus { 
   outline:none; 
 }
 
-.submit-btn:hover:active {
+.login-btn:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.login-btn:hover:active {
   background-color: #757575;
 }
 
-.submit-btn:hover {
-  background-color: rgba(0,0,0,0.8);
-}
