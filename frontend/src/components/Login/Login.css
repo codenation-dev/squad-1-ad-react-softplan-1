@@ -4,9 +4,19 @@
   right: 0;
   bottom: 0;
   left: 0;
+  display: grid;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.login-agrupar-logo {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-self: center;
+  grid-template-columns: 1fr 1fr;
+  width: 700px;
 }
 
 .login-main {
@@ -57,3 +67,31 @@
   background-color: #757575;
 }
 
+.login-logo {
+  width: 325px;
+  padding: 0 0 0 25px;
+}
+
+@media (max-width:1599px) {
+  /* medida padrão de responsividade */
+}
+
+@media (max-width:1199px) {
+  .login-agrupar-logo {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width:991px) {
+  /* medida padrão de responsividade */
+}
+
+@media (max-width:767px) {
+  .login-logo {
+    visibility: hidden;
+  }
+}
+
+@media (max-width:479px) {
+  /* medida padrão de responsividade */
+}
