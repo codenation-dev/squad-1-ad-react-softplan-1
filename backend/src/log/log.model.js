@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const LogSchema = new Schema({
   level: String,
@@ -7,15 +8,15 @@ const LogSchema = new Schema({
   origin: String,
   description: {
     title: String,
-    stacktrace: String
+    stacktrace: String,
   },
   occurrences: Number,
   lastOccurrence: {
     date: Date,
-    user: String
+    user: String,
   },
   removed: Boolean,
-  archived: Boolean
+  archived: Boolean,
 });
 
-module.exports = mongoose.model('Log', LogSchema)
+module.exports = mongoose.model('Log', LogSchema);

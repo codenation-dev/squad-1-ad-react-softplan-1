@@ -1,3 +1,3 @@
 module.exports = {
-  mongoURI: '<INSERT MONGO URI HERE>'
-}
+  mongoURI: '<INSERT MONGO URI HERE>',
+};

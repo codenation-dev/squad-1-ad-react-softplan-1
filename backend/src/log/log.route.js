@@ -1,15 +1,21 @@
-const express = require('express')
-const router = express.Router()
-const { getLogs, createLog, deleteLog, createDummyLog } = require('./log.controller')
+const express = require('express');
 
-router.get('/test', (_, res) => res.send('{"ok": true}'))
+const router = express.Router();
+const {
+  getLogs,
+  createLog,
+  deleteLog,
+  createDummyLog,
+} = require('./log.controller');
 
-router.get('/logs', getLogs)
+router.get('/test', (_, res) => res.send('{"ok": true}'));
 
-router.post('/logs', createLog)
+router.get('/logs', getLogs);
+
+router.post('/logs', createLog);
 
 router.get('/logs/:id/delete', deleteLog);
 
-router.get('/logs/add-dummy', createDummyLog)
+router.get('/logs/add-dummy', createDummyLog);
 
-module.exports = router
+module.exports = router;

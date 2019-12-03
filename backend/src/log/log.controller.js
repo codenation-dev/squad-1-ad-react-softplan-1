@@ -1,20 +1,20 @@
-const mongoose = require('mongoose')
-const Log = require('./log.model')
+const mongoose = require('mongoose');
+const Log = require('./log.model');
 
 exports.getLogs = (_, res) => {
   Log.find({}, (err, logs) => {
-    if (err) res.send(err)
-    res.send(logs)
-  })
-}
+    if (err) res.send(err);
+    res.send(logs);
+  });
+};
 
 exports.createLog = (req, res) => {
-  const log = new Log(req.body)
+  const log = new Log(req.body);
   log.save(err => {
-    if (err) res.send(err)
-    res.send(log)
-  })
-}
+    if (err) res.send(err);
+    res.send(log);
+  });
+};
 
 exports.createDummyLog = (_, res) => {
   const log = new Log({
@@ -35,30 +35,30 @@ exports.createDummyLog = (_, res) => {
       at Function.Module._load (internal/modules/cjs/loader.js:530:3)
       at Function.Module.runMain (internal/modules/cjs/loader.js:742:12)
       at startup (internal/bootstrap/node.js:279:19)
-      at bootstrapNodeJSCore (internal/bootstrap/node.js:696:3)`
+      at bootstrapNodeJSCore (internal/bootstrap/node.js:696:3)`,
     },
     occurrences: 5,
     lastOccurrence: {
       date: new Date(),
-      user: 'Squad react'
+      user: 'Squad react',
     },
     removed: false,
-    archived: false
-  })
+    archived: false,
+  });
   log.save(err => {
-    if (err) res.send(err)
-    res.send(log)
-  })
-}
+    if (err) res.send(err);
+    res.send(log);
+  });
+};
 
 exports.deleteLog = (req, res) => {
-  const id = new mongoose.Types.ObjectId(req.params.id.trim())
+  const id = new mongoose.Types.ObjectId(req.params.id.trim());
   Log.findByIdAndRemove(id, err => {
-      if (err) res.send(err)
-      res.send('{"removed" : true}')
-  })
+    if (err) res.send(err);
+    res.send('{"removed" : true}');
+  });
 };
 
 exports.test = (_, res) => {
-  res.send('{"ok": true}')
-}
+  res.send('{"ok": true}');
+};
