@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import Itens from "./ItemsList";
 import { Table } from "react-bootstrap";
-import SelectedList from "./SelectedList";
 import HeaderList from "./HeaderList";
-class List extends Component {
-  constructor(props) {
-    super(props);
-  }
 
+class List extends Component {
   state = {
     listError: [],
     filterHomologProduDev: "",
@@ -41,23 +37,19 @@ class List extends Component {
   changeItem = (item, idx) => {
     const listError = this.state.listError;
     listError[idx] = item;
-
     this.setState({ listError });
   };
 
   selectedAll = checked => {
-    console.log("Check", checked);
     const listError = this.state.listError;
-
-    listError.map(item => (item.selected = checked));
-
+    listError.map(item => item.selected = checked);
     this.setState({ listError });
   };
 
   archivedSelected = () => {
     const listError = this.state.listError;
     let bUpdated = false;
-    listError.map(item => {
+    listError.forEach(item => {
       if (item.selected) {
         this.markedArchived(item.id);
         item.archived = item.selected;
@@ -78,7 +70,7 @@ class List extends Component {
     const listError = this.state.listError;
 
     let bUpdated = false;
-    listError.map(item => {
+    listError.forEach(item => {
       if (item.selected) {
         this.deleteError(item.id);
         item.removed = item.selected;
@@ -96,62 +88,56 @@ class List extends Component {
   aplicarFiltro = () => {
     // Vai filtrar no array ou no banco de dados ?
     // O Certo seria no banco de dados.
+    // getListErrors(PassarParâmetrosNecessários)
   };
 
-  changeProducao = filterHomologProduDev => {
-    this.setState({ filterHomologProduDev });
-  };
-
-  changeOrderBy = orderBy => {
-    this.setState({ orderBy });
-  };
-
-  changeSearchBy = searchBy => {
-    this.setState({ searchBy });
-  };
+  changeProducao = filterHomologProduDev => this.setState({ filterHomologProduDev});
+  changeOrderBy = orderBy => this.setState({ orderBy });
+  changeSearchBy = searchBy => this.setState({ searchBy });
 
   render() {
     const { listError } = this.state;
     return (
-      <div className="m-3">
-        <form className="p-4">
-          <HeaderList
-            changeProducao={this.changeProducao}
-            changeOrderBy={this.changeOrderBy}
-            changeSearchBy={this.changeSearchBy}
-            aplicarFiltro={this.aplicarFiltro}
-            archivedSelected={this.archivedSelected}
-            deleteSelected={this.deleteSelected}
-          />
+      <div className="m-3 p-4">
+        <HeaderList
+          changeProducao={this.changeProducao}
+          changeOrderBy={this.changeOrderBy}
+          changeSearchBy={this.changeSearchBy}
+          aplicarFiltro={this.aplicarFiltro}
+          archivedSelected={this.archivedSelected}
+          deleteSelected={this.deleteSelected}
+          filterHomologProduDev={this.filterHomologProduDev}
+          orderBy={this.orderBy}
+          searchBy={this.searchBy}
+        />
 
-          <Table className="table table-hover">
-            <thead>
-              <tr>
-                <th>
-                  <input
-                    type="checkbox"
-                    onChange={e => this.selectedAll(e.target.checked)}
-                  />
-                </th>
-                <th>Level</th>
-                <th>Log</th>
-                <th>Eventos</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listError.map((item, idx) => {
-                return (
-                  <Itens
-                    key={idx}
-                    item={item}
-                    idx={idx}
-                    changeItem={this.changeItem}
-                  />
-                );
-              })}
-            </tbody>
-          </Table>
-        </form>
+        <Table className="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  onChange={e => this.selectedAll(e.target.checked)}
+                />
+              </th>
+              <th>Level</th>
+              <th>Log</th>
+              <th>Eventos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listError.map((item, idx) => {
+              return (
+                <Itens
+                  key={idx}
+                  item={item}
+                  idx={idx}
+                  changeItem={this.changeItem}
+                />
+              );
+            })}
+          </tbody>
+        </Table>
       </div>
     );
   }
