@@ -5,9 +5,8 @@ import HeaderList from "./HeaderList";
 
 class List extends Component {
   state = {
+    fullList: [],
     listError: [],
-    filterHomologProduDev: "",
-    orderBy: "",
     searchBy: ""
   };
 
@@ -18,7 +17,7 @@ class List extends Component {
 
         return response.json();
       })
-      .then(listError => this.setState({ listError }))
+      .then(listError => this.setState({ listError, fullList: listError }))
       .catch(error => console.log("Erro Lista: ", error));
   }
 
@@ -91,8 +90,36 @@ class List extends Component {
     // getListErrors(PassarParâmetrosNecessários)
   };
 
-  changeProducao = filterHomologProduDev => this.setState({ filterHomologProduDev});
-  changeOrderBy = orderBy => this.setState({ orderBy });
+  changeAmbiente = filterAmbiente => {
+    let filter = ''
+    if (filterAmbiente === 'Produção')
+      filter = 'production'
+    if (filterAmbiente === 'Homologação')
+      filter = 'homologation'
+    if (filterAmbiente === 'Dev')
+      filter = 'development'
+    
+    let listError = this.state.fullList
+    if (filter)
+      listError = listError.filter(e => e.environment === filter)
+    this.setState({ listError })
+  }
+  
+  changeOrderBy = orderBy => {
+    let listError = this.state.listError
+    if (orderBy === 'Frequência') {
+      listError.sort((a,b) => {
+        return a.occurrences - b.occurrences
+      })
+    }
+    if (orderBy === 'Level') {
+      listError.sort((a,b) => {
+        return a.level === 'warning' ? 1 : -1
+      })
+    }
+    this.setState({ listError })
+  }
+  
   changeSearchBy = searchBy => this.setState({ searchBy });
 
   render() {
@@ -100,15 +127,12 @@ class List extends Component {
     return (
       <div className="m-3 p-4">
         <HeaderList
-          changeProducao={this.changeProducao}
+          changeAmbiente={this.changeAmbiente}
           changeOrderBy={this.changeOrderBy}
           changeSearchBy={this.changeSearchBy}
           aplicarFiltro={this.aplicarFiltro}
           archivedSelected={this.archivedSelected}
           deleteSelected={this.deleteSelected}
-          filterHomologProduDev={this.filterHomologProduDev}
-          orderBy={this.orderBy}
-          searchBy={this.searchBy}
         />
 
         <Table className="table table-hover">

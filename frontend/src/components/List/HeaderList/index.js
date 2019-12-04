@@ -7,21 +7,18 @@ const HeaderList = (props) => {
       <div className="row container mb-3">
         <SelectedList
           classNameSelect={"custom-select col-lg-3"}
-          options={["Produção", "Homologação", "Dev"]}
-          setValue={props.changeProducao}
-          value={props.filterHomologProduDev}
+          options={["Ambientes", "Produção", "Homologação", "Dev"]}
+          handleChange={props.changeAmbiente}
         />
         <SelectedList
           classNameSelect={"custom-select col-lg-2"}
           options={["Ordenar por", "Level", "Frequência"]}
-          setValue={props.changeOrderBy}
-          value={props.orderBy}
+          handleChange={props.changeOrderBy}
         />
         <SelectedList
           classNameSelect={"custom-select col-lg-2"}
           options={["Buscar por", "Level", "Descrição", "Origem"]}
-          setValue={props.changeSearchBy}
-          value={props.searchBy}
+          handleChange={props.changeSearchBy}
         />
         <div className="col-lg-5 input-group" style={{ padding: 0 }}>
           <input type="text" className="form-control" />
