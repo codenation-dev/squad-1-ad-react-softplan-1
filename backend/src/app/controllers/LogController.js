@@ -1,21 +1,35 @@
-const mongoose = require('mongoose');
-const Log = require('./log.model');
+import * as Yup from 'yup';
+import mongoose from 'mongoose';
+import User from '../models/User';
+import Log from '../models/Log';
 
-exports.getLogs = (_, res) => {
-  Log.find({}, (err, logs) => {
-    if (err) res.send(err);
-    res.send(logs);
-  });
-};
+class LogController {
+  async index(req, res) {
+    const logs = await Log.find({});
 
-exports.createLog = (req, res) => {
-  const log = new Log(req.body);
-  log.save(err => {
-    if (err) res.send(err);
-    res.send(log);
-  });
-};
+    return res.json(logs);
+  }
 
+  async store(req, res) {
+    const log = new Log(req.body);
+    log.lastOccurrence.date = new Date();
+    log.lastOccurrence.user = req.userId;
+    log.save();
+
+    return res.json(log);
+  }
+
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+      await Log.findByIdAndRemove(id);
+
+      return res.json();
+    } catch (err) {
+      return res.status(400).json({ error: 'Error deleting log' });
+    }
+  }
+  /*
 exports.createDummyLog = (_, res) => {
   const log = new Log({
     level: 'error',
@@ -50,15 +64,7 @@ exports.createDummyLog = (_, res) => {
     res.send(log);
   });
 };
+*/
+}
 
-exports.deleteLog = (req, res) => {
-  const id = new mongoose.Types.ObjectId(req.params.id.trim());
-  Log.findByIdAndRemove(id, err => {
-    if (err) res.send(err);
-    res.send('{"removed" : true}');
-  });
-};
-
-exports.test = (_, res) => {
-  res.send('{"ok": true}');
-};
+export default new LogController();
