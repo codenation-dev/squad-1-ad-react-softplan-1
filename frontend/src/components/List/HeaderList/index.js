@@ -7,7 +7,7 @@ const HeaderList = (props) => {
       <div className="row container mb-3">
         <SelectedList
           classNameSelect={"custom-select col-lg-3"}
-          options={["Ambientes", "Produção", "Homologação", "Dev"]}
+          options={["Origem", "Produção", "Homologação", "Dev"]}
           handleChange={props.changeAmbiente}
         />
         <SelectedList
@@ -26,7 +26,7 @@ const HeaderList = (props) => {
             <button
               type="button"
               className="btn btn-default"
-              onClick={props.aplicarFiltro()}
+              onClick={props.aplicarFiltro}
             >
               <span className="glyphicon glyphicon-search"></span> Search
             </button>
