@@ -17,12 +17,12 @@ const Item = (props) => {
     props.changeItem(item, idx);
   };
 
-  const goToErrorPage = id => {
-    console.log('TODO: redirecionar para /error/${id}')
+  const goToErrorPage = () => {
+    window.location = `./error/${_id}`
   }
 
   return (
-    <tr onClick={() => goToErrorPage(_id)}>
+    <tr onClick={goToErrorPage}>
       <th scope="row">
         <input
           type="checkbox"
