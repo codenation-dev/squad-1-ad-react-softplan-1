@@ -2,6 +2,7 @@ import React from "react";
 
 const Item = (props) => {
   const {
+    _id,
     selected,
     level,
     description,
@@ -16,8 +17,12 @@ const Item = (props) => {
     props.changeItem(item, idx);
   };
 
+  const goToErrorPage = id => {
+    console.log('TODO: redirecionar para /error/${id}')
+  }
+
   return (
-    <tr>
+    <tr onClick={() => goToErrorPage(_id)}>
       <th scope="row">
         <input
           type="checkbox"
