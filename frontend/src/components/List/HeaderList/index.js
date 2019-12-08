@@ -1,61 +1,70 @@
-import React from "react";
+import React, {useState} from "react";
 import SelectedList from "../SelectedList";
+import { Button, ButtonToolbar, InputGroup, FormControl, Form } from "react-bootstrap";
 
 const HeaderList = (props) => {
+  const [filtro, setFiltro] = useState("");
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    event.stopPropagation(); 
+    props.aplicarFiltro(filtro);       
+  }
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    setFiltro(event.target.value);                   
+  }
+
   return (
-    <div>
-      <div className="row container mb-3">
+    <>
+    <InputGroup className="mb-3">    
+      <ButtonToolbar >
         <SelectedList
-          classNameSelect={"custom-select col-lg-3"}
-          options={["Origem", "Produção", "Homologação", "Dev"]}
+          title="Origem"
+          options={["Todas", "Produção", "Homologação", "Dev"]}
           handleChange={props.changeAmbiente}
         />
         <SelectedList
-          classNameSelect={"custom-select col-lg-2"}
-          options={["Ordenar por", "Level", "Frequência"]}
+          title="Ordenar por"
+          options={["Nenhum", "Level", "Frequência"]}
           handleChange={props.changeOrderBy}
         />
         <SelectedList
-          classNameSelect={"custom-select col-lg-2"}
-          options={["Buscar por", "Level", "Descrição", "Origem"]}
+          title="Buscar por"
+          options={["Todos", "Level", "Descrição", "Origem"]}
           handleChange={props.changeSearchBy}
         />
-        <div className="col-lg-5 input-group" style={{ padding: 0 }}>
-          <input type="text" className="form-control" />
-          <div className="input-group-append">
-            <button
-              type="button"
-              className="btn btn-default"
-              onClick={props.aplicarFiltro}
-            >
-              <span className="glyphicon glyphicon-search"></span> Search
-            </button>
-            {/* <button className="btn btn-outline-secondary" type="button">
-                <i className="material-icons" style={{ fontSize: "18px" }}>
-                  search
-                </i>
-              </button> */}
-          </div>
-        </div>
-      </div>
-      <div className="row container mb-4">
-        <button
-          type="button"
-          className="btn btn-outline-secondary offset-1 col-lg-2 ml-3"
+        <InputGroup>
+          <Form noValidate onSubmit={handleSubmit}>
+            <FormControl
+              placeholder="Filtrar por..."
+              value={filtro}
+              onChange={handleChange}
+            />
+          </Form>        
+          <InputGroup.Append>
+            <InputGroup.Text>Pesquisar</InputGroup.Text>
+          </InputGroup.Append>
+        </InputGroup>
+      </ButtonToolbar>
+    </InputGroup>
+    <ButtonToolbar className="mb-3">
+        <Button
+          variant="light"
           onClick={props.archivedSelected}
         >
           Arquivar
-        </button>
-        <button
-          type="button"
-          className="btn btn-outline-secondary col-lg-2 ml-3"
+        </Button>
+        <Button
+          variant="light"
           onClick={props.deleteSelected}
         >
           Apagar
-        </button>
-      </div>
-    </div>
-  );
+        </Button>
+      </ButtonToolbar>
+    </>
+  )
 }
 
 export default HeaderList;

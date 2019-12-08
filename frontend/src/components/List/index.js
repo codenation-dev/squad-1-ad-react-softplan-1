@@ -7,7 +7,7 @@ class List extends Component {
   state = {
     fullList: [],
     listError: [],
-    searchBy: ""
+    searchBy: "",
   };
 
   getListErrors() {
@@ -46,6 +46,7 @@ class List extends Component {
   };
 
   archivedSelected = () => {
+    alert("arquivou");
     const listError = this.state.listError;
     let bUpdated = false;
     listError.forEach(item => {
@@ -66,6 +67,7 @@ class List extends Component {
   };
 
   deleteSelected = () => {
+    alert("deletou");
     const listError = this.state.listError;
 
     let bUpdated = false;
@@ -84,7 +86,8 @@ class List extends Component {
     }
   };
 
-  aplicarFiltro = () => {
+  aplicarFiltro = filtro => {
+    alert(`filtrou por:${filtro}`);
     // Vai filtrar no array ou no banco de dados ?
     // O Certo seria no banco de dados.
     // getListErrors(PassarParâmetrosNecessários)
