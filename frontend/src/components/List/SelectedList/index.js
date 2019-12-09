@@ -1,22 +1,24 @@
 import React from "react";
+import { Dropdown } from "react-bootstrap";
 
-const SelectedList = (props) => {
- 
+const SelectedList = props => {
   const options = props.options.map((elem, idx) => (
-    <option key={idx} value={elem}>
+    <Dropdown.Item eventKey={elem} key={idx}>
       {elem}
-    </option>
+    </Dropdown.Item>
   ));
 
   return (
-    <select
-      onChange={(e) => props.handleChange(e.target.value)}
-      className={props.classNameSelect}
+    <Dropdown
+      title="Dropdown"
+      id={props.title}
+      key={props.title}
+      onSelect={e => props.handleChange(e)}
     >
-      {options}
-    </select>
+      <Dropdown.Toggle variant="primary">{props.title}</Dropdown.Toggle>
+      <Dropdown.Menu>{options}</Dropdown.Menu>
+    </Dropdown>
   );
-  
-}
+};
 
 export default SelectedList;

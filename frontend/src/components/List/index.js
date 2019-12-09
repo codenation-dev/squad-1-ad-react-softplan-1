@@ -1,56 +1,61 @@
-import React, { Component } from "react";
-import Itens from "./ItemsList";
-import { Table } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
 
-class List extends Component {
-  state = {
-    fullList: [],
-    listError: [],
-    searchBy: ""
-  };
+const List = () => {
+  const [fullList, setFullList] = useState([]);
+  const [listError, setListError] = useState([]);
+  const [searchBy, setSearchBy] = useState("");
+  const [selectAll, setSelectAll] = useState(false);
 
-  getListErrors() {
+  const getListErrors = () => {
     fetch("http://localhost:3000/logs")
       .then(response => {
         if (!response.ok) throw new Error();
-
         return response.json();
       })
-      .then(listError => this.setState({ listError, fullList: listError }))
-      .catch(error => console.log("Erro Lista: ", error));
-  }
+      .then(data => {
+        data.forEach(item => {
+          item.selected = false;
+        });
+        setFullList(data);
+        setListError(data);
+      })
+      .catch(error => console.log("Erro ao buscar os itens da lista: ", error));
+  };
 
-  markedArchived(id) {
+  useEffect(() => {
+    getListErrors();
+  }, []);
+
+  useEffect(() => {
+    listError.forEach(item => {
+      item.selected = selectAll;
+    });
+    let items = listError.filter(e => e);
+    setListError(items);
+  }, [selectAll]);
+
+  useEffect(() => {
+    setListError(fullList);
+  }, [fullList]);
+
+  const setSelected = idx => {
+    listError[idx].selected = !listError[idx].selected;
+    let items = listError.filter(e => e);
+    setListError(items);
+  };
+
+  const markedArchived = id => {
     // Definir como vai atualizar na API
-  }
-
-  deleteError(id) {
-    // Definir como vai excluir na API
-  }
-
-  componentDidMount() {
-    this.getListErrors();
-  }
-
-  changeItem = (item, idx) => {
-    const listError = this.state.listError;
-    listError[idx] = item;
-    this.setState({ listError });
   };
 
-  selectedAll = checked => {
-    const listError = this.state.listError;
-    listError.map(item => item.selected = checked);
-    this.setState({ listError });
-  };
-
-  archivedSelected = () => {
-    const listError = this.state.listError;
+  const archiveSelected = () => {
+    let items = listError;
     let bUpdated = false;
     listError.forEach(item => {
       if (item.selected) {
-        this.markedArchived(item.id);
+        markedArchived(item.id);
         item.archived = item.selected;
         bUpdated = true;
       }
@@ -60,18 +65,21 @@ class List extends Component {
     // consulta no banco de dados. Porém melhor deixar consultar para garantir os dados
     // ou terá que ter muito controle se foi concluído com sucesso a alteração
     if (bUpdated) {
-      const listFilter = listError.filter(item => !item.archived);
-      this.setState({ listError: listFilter });
+      items = items.filter(item => !item.archived);
+      setFullList(items);
     }
   };
 
-  deleteSelected = () => {
-    const listError = this.state.listError;
+  const deleteError = id => {
+    // Definir como vai excluir na API
+  };
 
+  const deleteSelected = () => {
+    let items = listError;
     let bUpdated = false;
-    listError.forEach(item => {
+    items.forEach(item => {
       if (item.selected) {
-        this.deleteError(item.id);
+        deleteError(item.id);
         item.removed = item.selected;
         bUpdated = true;
       }
@@ -79,92 +87,67 @@ class List extends Component {
 
     // Abaixo fazer o cógido abaixo ou chamar o método: getListErrors();
     if (bUpdated) {
-      const listFilter = listError.filter(item => !item.removed);
-      this.setState({ listError: listFilter });
+      items = items.filter(item => !item.removed);
+      setFullList(items);
     }
   };
 
-  aplicarFiltro = () => {
+  const aplicarFiltro = filtro => {
+    alert(`filtrou por:${searchBy} e ${filtro}`);
+    setFullList([]);
     // Vai filtrar no array ou no banco de dados ?
     // O Certo seria no banco de dados.
     // getListErrors(PassarParâmetrosNecessários)
   };
 
-  changeAmbiente = filterAmbiente => {
-    let filter = ''
-    if (filterAmbiente === 'Produção')
-      filter = 'production'
-    if (filterAmbiente === 'Homologação')
-      filter = 'homologation'
-    if (filterAmbiente === 'Dev')
-      filter = 'development'
-    
-    let listError = this.state.fullList
-    if (filter)
-      listError = listError.filter(e => e.environment === filter)
-    this.setState({ listError })
-  }
-  
-  changeOrderBy = orderBy => {
-    let listError = this.state.listError
-    if (orderBy === 'Frequência') {
-      listError.sort((a,b) => {
-        return a.occurrences - b.occurrences
-      })
-    }
-    if (orderBy === 'Level') {
-      listError.sort((a,b) => {
-        return a.level === 'warning' ? 1 : -1
-      })
-    }
-    this.setState({ listError })
-  }
-  
-  changeSearchBy = searchBy => this.setState({ searchBy });
+  const changeAmbiente = filterAmbiente => {
+    let filters = {
+      ["Produção"]: "production",
+      ["Homologação"]: "homologation",
+      ["Dev"]: "development"
+    };
+    let filter = filters[filterAmbiente];
+    let items = fullList;
+    if (filter) items = items.filter(e => e.environment === filter);
+    setListError(items);
+  };
 
-  render() {
-    const { listError } = this.state;
-    return (
-      <div className="m-3 p-4">
-        <HeaderList
-          changeAmbiente={this.changeAmbiente}
-          changeOrderBy={this.changeOrderBy}
-          changeSearchBy={this.changeSearchBy}
-          aplicarFiltro={this.aplicarFiltro}
-          archivedSelected={this.archivedSelected}
-          deleteSelected={this.deleteSelected}
-        />
+  const changeOrderBy = orderBy => {
+    if (orderBy === "Frequência") {
+      listError.sort((a, b) => {
+        return a.occurrences - b.occurrences;
+      });
+    }
+    if (orderBy === "Level") {
+      listError.sort((a, b) => {
+        return a.level === "warning" ? 1 : -1;
+      });
+    }
+    let items = listError.filter(e => e);
+    setListError(items);
+  };
 
-        <Table className="table table-hover">
-          <thead>
-            <tr>
-              <th>
-                <input
-                  type="checkbox"
-                  onChange={e => this.selectedAll(e.target.checked)}
-                />
-              </th>
-              <th>Level</th>
-              <th>Log</th>
-              <th>Eventos</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listError.map((item, idx) => {
-              return (
-                <Itens
-                  key={idx}
-                  item={item}
-                  idx={idx}
-                  changeItem={this.changeItem}
-                />
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>
-    );
-  }
-}
+  const changeSearchBy = searchBy => setSearchBy(searchBy);
+
+  return (
+    <div className="m-3 p-4">
+      <HeaderList
+        changeAmbiente={changeAmbiente}
+        changeOrderBy={changeOrderBy}
+        changeSearchBy={changeSearchBy}
+        aplicarFiltro={aplicarFiltro}
+        archivedSelected={archiveSelected}
+        deleteSelected={deleteSelected}
+      />
+
+      <Items
+        listError={listError}
+        setSelected={setSelected}
+        selectAll={selectAll}
+        setSelectAll={setSelectAll}
+      />
+    </div>
+  );
+};
 
 export default List;

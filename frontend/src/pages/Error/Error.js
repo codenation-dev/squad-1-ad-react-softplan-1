@@ -2,11 +2,8 @@ import React from "react";
 
 import { ErrorDetails } from "../../components/ErrorDetails"
 
-const Error = ( props ) => {
-
-  return (
+const Error = ( props ) => (
     <ErrorDetails/>
   )
-}
 
 export default Error;
