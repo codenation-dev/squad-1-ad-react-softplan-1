@@ -1,7 +1,23 @@
 import * as Yup from 'yup';
+import mongoose from 'mongoose';
 import User from '../models/User';
 
 class UserController {
+  async index(req, res) {
+    try {
+      const user = await User.findOne(
+        {
+          _id: new mongoose.Types.ObjectId(req.userId),
+        },
+        ['name', 'email']
+      );
+
+      return res.json(user);
+    } catch (err) {
+      return res.status(400).json({ error: err });
+    }
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
