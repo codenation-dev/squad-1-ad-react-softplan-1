@@ -1,42 +1,31 @@
 import React from "react";
+import { InputGroup } from "react-bootstrap";
 
 const Item = props => {
-  const {
-    _id,
-    selected,
-    level,
-    description,
-    origin,
-    lastOccurrence,
-    occurrences
-  } = props.item;
-
-  const changeSelected = idx => {
-    let { item } = props;
-    item.selected = !item.selected;
-    props.changeItem(item, idx);
+  const handleChange = () => {
+    props.setSelected(props.idx);
   };
 
   const goToErrorPage = () => {
-    window.location = `./error/${_id}`;
+    window.location = `./error/${props.item._id}`;
   };
 
   return (
     <tr>
       <th scope="row">
-        <input
-          type="checkbox"
-          checked={selected}
-          onChange={() => changeSelected(props.idx)}
+        <InputGroup.Checkbox
+          value={props.item.selected}
+          checked={props.item.selected}
+          onChange={() => handleChange()}
         />
       </th>
-      <td onClick={goToErrorPage}>{level}</td>
+      <td onClick={goToErrorPage}>{props.item.level}</td>
       <td onClick={goToErrorPage} className="">
-        <div>{description.title}</div>
-        <div>{origin}</div>
-        <div>{lastOccurrence.date.toString()}</div>
+        <div>{props.item.description.title}</div>
+        <div>{props.item.origin}</div>
+        <div>{props.item.lastOccurrence.date.toString()}</div>
       </td>
-      <td onClick={goToErrorPage}>{occurrences}</td>
+      <td onClick={goToErrorPage}>{props.item.occurrences}</td>
     </tr>
   );
 };
