@@ -1,24 +1,30 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import SelectedList from "../SelectedList";
-import { Button, ButtonGroup, InputGroup, FormControl, Form } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  InputGroup,
+  FormControl,
+  Form
+} from "react-bootstrap";
 
-const HeaderList = (props) => {
+const HeaderList = props => {
   const [filtro, setFiltro] = useState("");
 
   const handleSubmit = event => {
     event.preventDefault();
-    event.stopPropagation(); 
-    props.aplicarFiltro(filtro);       
-  }
+    event.stopPropagation();
+    props.aplicarFiltro(filtro);
+  };
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     event.preventDefault();
-    setFiltro(event.target.value);                   
-  }
+    setFiltro(event.target.value);
+  };
 
   return (
     <>
-      <InputGroup className="mb-3">   
+      <InputGroup className="mb-3">
         <SelectedList
           title="Origem"
           options={["Todas", "Produção", "Homologação", "Dev"]}
@@ -45,22 +51,16 @@ const HeaderList = (props) => {
           <InputGroup.Text>Pesquisar</InputGroup.Text>
         </InputGroup.Append>
       </InputGroup>
-      <ButtonGroup  className="mb-3">
-        <Button
-          variant="light"
-          onClick={props.archivedSelected}
-        >
+      <ButtonGroup className="mb-3">
+        <Button variant="light" onClick={props.archivedSelected}>
           Arquivar
         </Button>
-        <Button
-          variant="light"
-          onClick={props.deleteSelected}
-        >
+        <Button variant="light" onClick={props.deleteSelected}>
           Apagar
         </Button>
-      </ButtonGroup >
+      </ButtonGroup>
     </>
-  )
-}
+  );
+};
 
 export default HeaderList;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 
-const SelectedList = (props) => {
+const SelectedList = props => {
   const options = props.options.map((elem, idx) => (
     <Dropdown.Item eventKey={elem} key={idx}>
       {elem}
@@ -9,21 +9,16 @@ const SelectedList = (props) => {
   ));
 
   return (
-    <Dropdown 
+    <Dropdown
       title="Dropdown"
       id={props.title}
       key={props.title}
-      onSelect={(e) => props.handleChange(e)}
+      onSelect={e => props.handleChange(e)}
     >
-      <Dropdown.Toggle variant="primary">
-        {props.title}
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        {options}
-      </Dropdown.Menu>      
-    </Dropdown >
+      <Dropdown.Toggle variant="primary">{props.title}</Dropdown.Toggle>
+      <Dropdown.Menu>{options}</Dropdown.Menu>
+    </Dropdown>
   );
-  
-}
+};
 
 export default SelectedList;

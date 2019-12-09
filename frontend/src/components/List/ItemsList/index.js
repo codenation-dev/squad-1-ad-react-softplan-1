@@ -1,44 +1,30 @@
 import React from "react";
+import Item from "../ItemList";
+import { Table } from "react-bootstrap";
 
-const Item = (props) => {
-  const {
-    _id,
-    selected,
-    level,
-    description,
-    origin,
-    lastOccurrence,
-    occurrences
-  } = props.item;
+const Items = props => (
+  <Table striped bordered hover>
+    <thead>
+      <tr>
+        <th>
+          <input
+            type="checkbox"
+            onChange={e => props.selectAll(e.target.checked)}
+          />
+        </th>
+        <th>Level</th>
+        <th>Log</th>
+        <th>Eventos</th>
+      </tr>
+    </thead>
+    <tbody>
+      {props.listError.map((item, idx) => {
+        return (
+          <Item key={idx} item={item} idx={idx} changeItem={props.changeItem} />
+        );
+      })}
+    </tbody>
+  </Table>
+);
 
-  const changeSelected = idx => {
-    let { item } = props;
-    item.selected = !item.selected;
-    props.changeItem(item, idx);
-  };
-
-  const goToErrorPage = () => {
-    window.location = `./error/${_id}`
-  }
-
-  return (
-    <tr onClick={goToErrorPage}>
-      <th scope="row">
-        <input
-          type="checkbox"
-          checked={selected}
-          onChange={() => changeSelected(props.idx)}
-        />
-      </th>
-      <td>{level}</td>
-      <td className="">
-        <div>{description.title}</div>
-        <div>{origin}</div>
-        <div>{lastOccurrence.date.toString()}</div>
-      </td>
-      <td>{occurrences}</td>
-    </tr>
-  );
-}
-
-export default Item;
+export default Items;

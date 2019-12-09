@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Itens from "./ItemsList";
-import { Table } from "react-bootstrap";
+import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
 
 class List extends Component {
   state = {
     fullList: [],
     listError: [],
-    searchBy: "",
+    searchBy: ""
   };
 
   getListErrors() {
@@ -39,9 +38,9 @@ class List extends Component {
     this.setState({ listError });
   };
 
-  selectedAll = checked => {
+  selectAll = checked => {
     const listError = this.state.listError;
-    listError.map(item => item.selected = checked);
+    listError.map(item => (item.selected = checked));
     this.setState({ listError });
   };
 
@@ -94,35 +93,31 @@ class List extends Component {
   };
 
   changeAmbiente = filterAmbiente => {
-    let filter = ''
-    if (filterAmbiente === 'Produção')
-      filter = 'production'
-    if (filterAmbiente === 'Homologação')
-      filter = 'homologation'
-    if (filterAmbiente === 'Dev')
-      filter = 'development'
-    
-    let listError = this.state.fullList
-    if (filter)
-      listError = listError.filter(e => e.environment === filter)
-    this.setState({ listError })
-  }
-  
+    let filter = "";
+    if (filterAmbiente === "Produção") filter = "production";
+    if (filterAmbiente === "Homologação") filter = "homologation";
+    if (filterAmbiente === "Dev") filter = "development";
+
+    let listError = this.state.fullList;
+    if (filter) listError = listError.filter(e => e.environment === filter);
+    this.setState({ listError });
+  };
+
   changeOrderBy = orderBy => {
-    let listError = this.state.listError
-    if (orderBy === 'Frequência') {
-      listError.sort((a,b) => {
-        return a.occurrences - b.occurrences
-      })
+    let listError = this.state.listError;
+    if (orderBy === "Frequência") {
+      listError.sort((a, b) => {
+        return a.occurrences - b.occurrences;
+      });
     }
-    if (orderBy === 'Level') {
-      listError.sort((a,b) => {
-        return a.level === 'warning' ? 1 : -1
-      })
+    if (orderBy === "Level") {
+      listError.sort((a, b) => {
+        return a.level === "warning" ? 1 : -1;
+      });
     }
-    this.setState({ listError })
-  }
-  
+    this.setState({ listError });
+  };
+
   changeSearchBy = searchBy => this.setState({ searchBy });
 
   render() {
@@ -138,33 +133,11 @@ class List extends Component {
           deleteSelected={this.deleteSelected}
         />
 
-        <Table className="table table-hover">
-          <thead>
-            <tr>
-              <th>
-                <input
-                  type="checkbox"
-                  onChange={e => this.selectedAll(e.target.checked)}
-                />
-              </th>
-              <th>Level</th>
-              <th>Log</th>
-              <th>Eventos</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listError.map((item, idx) => {
-              return (
-                <Itens
-                  key={idx}
-                  item={item}
-                  idx={idx}
-                  changeItem={this.changeItem}
-                />
-              );
-            })}
-          </tbody>
-        </Table>
+        <Items
+          selectAll={this.selectAll}
+          listError={listError}
+          changeItem={this.changeItem}
+        />
       </div>
     );
   }
