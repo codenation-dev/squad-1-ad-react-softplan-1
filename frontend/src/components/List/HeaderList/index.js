@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import SelectedList from "../SelectedList";
-import { Button, ButtonToolbar, InputGroup, FormControl, Form } from "react-bootstrap";
+import { Button, ButtonGroup, InputGroup, FormControl, Form } from "react-bootstrap";
 
 const HeaderList = (props) => {
   const [filtro, setFiltro] = useState("");
@@ -45,7 +45,7 @@ const HeaderList = (props) => {
           <InputGroup.Text>Pesquisar</InputGroup.Text>
         </InputGroup.Append>
       </InputGroup>
-      <ButtonToolbar className="mb-3">
+      <ButtonGroup  className="mb-3">
         <Button
           variant="light"
           onClick={props.archivedSelected}
@@ -58,7 +58,7 @@ const HeaderList = (props) => {
         >
           Apagar
         </Button>
-      </ButtonToolbar>
+      </ButtonGroup >
     </>
   )
 }
