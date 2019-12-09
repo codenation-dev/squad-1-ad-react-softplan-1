@@ -17,7 +17,10 @@ class List extends Component {
 
         return response.json();
       })
-      .then(listError => this.setState({ listError, fullList: listError }))
+      .then(listError => {
+        this.setState({ listError, fullList: listError });
+        console.log(listError);
+      })
       .catch(error => console.log("Erro Lista: ", error));
   }
 
@@ -41,7 +44,7 @@ class List extends Component {
 
   selectedAll = checked => {
     const listError = this.state.listError;
-    listError.map(item => item.selected = checked);
+    listError.map(item => (item.selected = checked));
     this.setState({ listError });
   };
 
@@ -91,35 +94,31 @@ class List extends Component {
   };
 
   changeAmbiente = filterAmbiente => {
-    let filter = ''
-    if (filterAmbiente === 'Produção')
-      filter = 'production'
-    if (filterAmbiente === 'Homologação')
-      filter = 'homologation'
-    if (filterAmbiente === 'Dev')
-      filter = 'development'
-    
-    let listError = this.state.fullList
-    if (filter)
-      listError = listError.filter(e => e.environment === filter)
-    this.setState({ listError })
-  }
-  
+    let filter = "";
+    if (filterAmbiente === "Produção") filter = "production";
+    if (filterAmbiente === "Homologação") filter = "homologation";
+    if (filterAmbiente === "Dev") filter = "development";
+
+    let listError = this.state.fullList;
+    if (filter) listError = listError.filter(e => e.environment === filter);
+    this.setState({ listError });
+  };
+
   changeOrderBy = orderBy => {
-    let listError = this.state.listError
-    if (orderBy === 'Frequência') {
-      listError.sort((a,b) => {
-        return a.occurrences - b.occurrences
-      })
+    let listError = this.state.listError;
+    if (orderBy === "Frequência") {
+      listError.sort((a, b) => {
+        return a.occurrences - b.occurrences;
+      });
     }
-    if (orderBy === 'Level') {
-      listError.sort((a,b) => {
-        return a.level === 'warning' ? 1 : -1
-      })
+    if (orderBy === "Level") {
+      listError.sort((a, b) => {
+        return a.level === "warning" ? 1 : -1;
+      });
     }
-    this.setState({ listError })
-  }
-  
+    this.setState({ listError });
+  };
+
   changeSearchBy = searchBy => this.setState({ searchBy });
 
   render() {

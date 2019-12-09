@@ -1,12 +1,13 @@
 import React from "react";
 
-import { ErrorDetails } from "../../components/ErrorDetails"
+import { ErrorDetails } from "../../components/ErrorDetails";
 
-const Error = ( props ) => {
-
+const Error = props => {
   return (
-    <ErrorDetails/>
-  )
-}
+    <div>
+      <ErrorDetails id={props.match.params.id}></ErrorDetails>
+    </div>
+  );
+};
 
 export default Error;
