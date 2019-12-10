@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
+import { getLogs } from "../api";
 
 const List = () => {
   const [fullList, setFullList] = useState([]);
@@ -8,20 +9,17 @@ const List = () => {
   const [searchBy, setSearchBy] = useState("");
   const [selectAll, setSelectAll] = useState(false);
 
-  const getListErrors = () => {
-    fetch("http://localhost:3000/logs")
-      .then(response => {
-        if (!response.ok) throw new Error();
-        return response.json();
-      })
-      .then(data => {
-        data.forEach(item => {
-          item.selected = false;
-        });
-        setFullList(data);
-        setListError(data);
-      })
-      .catch(error => console.log("Erro ao buscar os itens da lista: ", error));
+  const getListErrors = async () => {
+    try{
+      let logs = await getLogs("token_jwt");
+      logs.forEach(item => {
+        item.selected = false;
+      });
+      setFullList(logs);
+      setListError(logs);
+    } catch(error){
+      console.log("Erro ao buscar os itens da lista: ", error)
+    }
   };
 
   useEffect(() => {
