@@ -14,7 +14,7 @@ class LogController {
       return res.json(logs);
     } catch (err) {
       return res
-        .status(400)
+        .status(500)
         .json({ error: 'Some thing wrong to try list logs' });
     }
   }
@@ -28,7 +28,7 @@ class LogController {
 
       return res.json(log);
     } catch (err) {
-      return res.status(400).json({ error: 'Error when try save' });
+      return res.status(500).json({ error: 'Error when try save' });
     }
   }
 

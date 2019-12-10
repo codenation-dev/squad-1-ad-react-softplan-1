@@ -31,7 +31,7 @@ class LogDetailController {
       });
     } catch (err) {
       return res
-        .status(400)
+        .status(500)
         .json({ error: 'Some thing worng to try list logs' });
     }
   }
