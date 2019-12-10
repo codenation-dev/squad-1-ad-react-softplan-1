@@ -39,7 +39,7 @@ class LogController {
 
       return res.json();
     } catch (err) {
-      return res.status(400).json({ error: 'Error deleting log' });
+      return res.status(500).json({ error: 'Error deleting log' });
     }
   }
   /*
