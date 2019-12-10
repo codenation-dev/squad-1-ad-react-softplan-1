@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+import app from './app';
+
+app.listen(3030);
+=======
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -22,3 +27,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+>>>>>>> master
