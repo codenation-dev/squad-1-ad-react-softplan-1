@@ -9,7 +9,7 @@ const List = () => {
   const [selectAll, setSelectAll] = useState(false);
 
   const getListErrors = () => {
-    fetch("https://central-de-erros-backend.herokuapp.com/logs")
+    fetch("http://localhost:3000/logs")
       .then(response => {
         if (!response.ok) throw new Error();
         return response.json();
