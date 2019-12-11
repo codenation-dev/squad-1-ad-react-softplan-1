@@ -5,6 +5,7 @@ import { Home } from "../pages/Home"
 import { ErrorDetails } from "../components/ErrorDetails";
 import { NotFound } from "../components/NotFound"
 import { isAuth } from "../components/Auth"
+import List from "../components/List";
 
 const PrivateRoute = ({ component: Component, ...params }) => (
   <Route
