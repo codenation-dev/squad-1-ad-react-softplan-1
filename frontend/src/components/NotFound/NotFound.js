@@ -1,13 +1,31 @@
 import React from "react";
+import { Card, Button } from "react-bootstrap"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSadCry } from "@fortawesome/free-solid-svg-icons"
 
 const NotFound = () => {
 
+  const goHome = () => {
+    window.location = "./"
+  }
+
   return (
-    <div className="main">
-      <h1>Ops!</h1>
-      <p>Página não encontrada</p>
-      <a href='./' data-test="voltar"><i className="fas fa-arrow-left"></i> Voltar para Home</a>
-    </div>
+    <Card className="text-center">
+      <Card.Header>Erro 404</Card.Header>
+      <Card.Body>
+        <Card.Title>Ops! Página não encontrada :(</Card.Title>
+        <Card.Text>
+          <FontAwesomeIcon 
+            icon={faSadCry} 
+            style={{color: "#C0C0C0", padding: "20px"}} 
+            size="10x" 
+          />
+        </Card.Text>
+        <Button variant="primary" onClick={goHome}>
+          Voltar para Home
+        </Button>
+      </Card.Body>
+    </Card>
   )
 }
 
