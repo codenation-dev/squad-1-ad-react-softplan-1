@@ -23,7 +23,8 @@ const Item = props => {
       <td onClick={goToErrorPage} className="">
         <div>{props.item.description.title}</div>
         <div>{props.item.origin}</div>
-        <div>{props.item.lastOccurrence.date.toString()}</div>
+        Colocar BACKEND para trazer ORIGIN e LASTOCCURRENCE
+        {/* <div>{props.item.lastOccurrence.date.toString()}</div> */}
       </td>
       <td onClick={goToErrorPage}>{props.item.occurrences}</td>
     </tr>

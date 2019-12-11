@@ -9,7 +9,14 @@ const List = () => {
   const [selectAll, setSelectAll] = useState(false);
 
   const getListErrors = () => {
-    fetch("http://localhost:3000/logs")
+    fetch("http://localhost:3030/logs", { 
+      method: 'GET', 
+      headers: {
+        ["Authorization"]: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U",
+      }, 
+      mode: 'cors', 
+      cache: 'default' 
+    })
       .then(response => {
         if (!response.ok) throw new Error();
         return response.json();
@@ -139,7 +146,6 @@ const List = () => {
         archivedSelected={archiveSelected}
         deleteSelected={deleteSelected}
       />
-
       <Items
         listError={listError}
         setSelected={setSelected}
