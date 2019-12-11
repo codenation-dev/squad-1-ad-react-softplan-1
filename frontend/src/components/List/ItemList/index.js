@@ -7,7 +7,7 @@ const Item = props => {
   };
 
   const goToErrorPage = () => {
-    window.location = `./error/${props.item._id}`;
+    window.location = `./error-details/${props.item._id}`;
   };
 
   return (
