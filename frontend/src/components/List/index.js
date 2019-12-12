@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
+import { getErrors } from "../../services/ApiService"
 
 const List = () => {
   const [fullList, setFullList] = useState([]);
@@ -9,18 +10,7 @@ const List = () => {
   const [selectAll, setSelectAll] = useState(false);
 
   const getListErrors = () => {
-    fetch("http://localhost:3030/logs", { 
-      method: 'GET', 
-      headers: {
-        ["Authorization"]: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U",
-      }, 
-      mode: 'cors', 
-      cache: 'default' 
-    })
-      .then(response => {
-        if (!response.ok) throw new Error();
-        return response.json();
-      })
+    getErrors()
       .then(data => {
         data.forEach(item => {
           item.selected = false;

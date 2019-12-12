@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, Badge } from "react-bootstrap";
+import { getErrorById } from "../../services/ApiService"
 
 const ErrorDetails = props => {
+  
+  const errorId = props.match.params.id;
+
   const goToHomePage = () => {
     props.history.push("/");
   };
@@ -25,20 +29,8 @@ const ErrorDetails = props => {
     level: ""
   });
 
-  const getErrosById = () => {
-    fetch(`http://localhost:3030/logs/${props.match.params.id}`, { 
-      method: 'GET', 
-      headers: {
-        ["Authorization"]: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U",
-      }, 
-      mode: 'cors', 
-      cache: 'default' 
-    })
-      .then(response => {
-        if (!response.ok) throw new Error();
-
-        return response.json();
-      })
+  const getError = () => {
+    getErrorById(errorId)
       .then(data => setObjError(data))
       .catch(error =>
         console.log("Erro ao buscar os detalhes do erro! ", error)
@@ -46,7 +38,7 @@ const ErrorDetails = props => {
   }
 
   useEffect(() => {
-    getErrosById();
+    getError();
   }, []);
 
   return (
