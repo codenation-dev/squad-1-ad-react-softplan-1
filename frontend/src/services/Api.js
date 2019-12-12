@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { getToken} from "../Auth"
+import { getUser} from "./Auth"
 
 const cache = setupCache({
   maxAge: 15 * 60 * 1000
@@ -14,8 +14,7 @@ const API = axios.create({
 const getConfig = () => {
   let config = {
     headers: {
-      //Authorization: `beare ${getToken()}`
-      Authorization: `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjA2M2I3MzdmMWNhMzQ2YzIzMjUyYyIsImlhdCI6MTU3NjExODE1MiwiZXhwIjoxNTc2Mzc3MzUyfQ.R5ndgjz6DikmHttqyXsnbAO9S2qgxQ9OVXfEWiRMYts`,
+      Authorization: `bearer ${getUser() && getUser().authtoken}`,
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",

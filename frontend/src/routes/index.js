@@ -10,14 +10,9 @@ const PrivateRoute = ({ component: Component, ...params }) => (
   <Route
     {...params}
     render={props =>
-      isAuth() ? (
-        <Component {...props} />
-      ) : (
-        <Component {...props} />
-        // <Redirect
-        //   to={{ pathname: "./login", state: { from: props.location } }}
-        // />
-      )
+      isAuth() 
+      ? <Component {...props} />
+      : <Redirect to={{ pathname: "./login", state: { from: props.location } }} />
     }
   />
 );
@@ -26,7 +21,7 @@ const Routes = () => (
   <>
     <Switch>
       <PrivateRoute exact path="/" component={Home}></PrivateRoute>
-      <Route exact path="/error-details/:id" component={ErrorDetails}></Route>
+      <PrivateRoute exact path="/error-details/:id" component={ErrorDetails}></PrivateRoute>
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" render={() => <div>Login</div>}></Route>
       <Route exact path="/new-user" render={User}></Route>

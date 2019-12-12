@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
-import { getErrors } from "../Api/api.js";
+import { getErrors } from "../../services/Api"
 
 const List = props => {
   const [fullList, setFullList] = useState([]);
