@@ -28,6 +28,7 @@ const Items = props => (
             item={item}
             idx={idx}
             setSelected={props.setSelected}
+            history={props.history}
           />
         );
       })}

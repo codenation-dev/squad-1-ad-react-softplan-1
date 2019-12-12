@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, ButtonGroup, Badge } from "react-bootstrap";
+import { ButtonGroup, Badge } from "react-bootstrap";
+import { BackToHome } from "../BackToHome";
+import { getErrorsById } from "../Api/api.js";
 
 const ErrorDetails = props => {
-  const goToHomePage = () => {
-    props.history.push("/");
-  };
-
-  // const [objError, setObjError] = useState([]);
   const [objError, setObjError] = useState({
     user: {
       email: "",
@@ -25,38 +22,25 @@ const ErrorDetails = props => {
     level: ""
   });
 
-  const getErrosById = () => {
-    fetch(`http://localhost:3030/logs/${props.match.params.id}`, { 
-      method: 'GET', 
-      headers: {
-        ["Authorization"]: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U",
-      }, 
-      mode: 'cors', 
-      cache: 'default' 
-    })
-      .then(response => {
-        if (!response.ok) throw new Error();
-
-        return response.json();
-      })
-      .then(data => setObjError(data))
-      .catch(error =>
-        console.log("Erro ao buscar os detalhes do erro! ", error)
-      );
-  }
+  const getItemById = async () => {
+    try {
+      let data = await getErrorsById(props.match.params.id);
+      setObjError(data)
+    } catch (error) {
+      console.log("Erro ao buscar os detalhes do erro: ", error);
+    }
+  };
 
   useEffect(() => {
-    getErrosById();
+    getItemById();
   }, []);
 
   return (
     <div className="m-3 p-4">
       <ButtonGroup className="mb-3">
-        <Button variant="light" onClick={goToHomePage}>
-          Voltar
-        </Button>
+        <BackToHome history={props.history}/>
       </ButtonGroup>
-      <>
+      <div>
         <h1 className="mb-3">{`Erro no ${objError.origin} em ${objError.lastOccurrence.date}`}</h1>
         <div className="row d-flex align-items-center">
           <div className="col-sm-12 col-md-8">
@@ -65,12 +49,9 @@ const ErrorDetails = props => {
             <h5>Detalhes</h5>
             <p>{objError.description.stacktrace}</p>
           </div>
-
           <div className="offset-md-1 col-sm-12 col-md-3">
             <div>
-              <Badge variant="secondary">
-                {objError.level}
-              </Badge>
+              <Badge variant="secondary">{objError.level}</Badge>
               <h5>Eventos</h5>
               <p>{objError.occurrences}.</p>
             </div>
@@ -80,7 +61,7 @@ const ErrorDetails = props => {
             </div>
           </div>
         </div>
-      </>
+      </div>
     </div>
   );
 };
