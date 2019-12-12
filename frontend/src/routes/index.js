@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { ErrorDetails } from "../components/ErrorDetails";
 import { NotFound } from "../components/NotFound";
-import { isAuth } from "../components/Auth";
+import { isAuth } from "../services/Auth";
 import { User } from "../components/User";
 
 const PrivateRoute = ({ component: Component, ...params }) => (
