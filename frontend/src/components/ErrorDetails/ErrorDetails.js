@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, Badge } from "react-bootstrap";
-import { getErrorById } from "../../services/ApiService"
+import { getErrorById } from "../../services/ApiService";
+import { getUser } from "../../services/Auth";
 
 const ErrorDetails = props => {
   
   const errorId = props.match.params.id;
-
+  
   const goToHomePage = () => {
     props.history.push("/");
   };
 
-  // const [objError, setObjError] = useState([]);
   const [objError, setObjError] = useState({
     user: {
       email: "",
@@ -68,7 +68,7 @@ const ErrorDetails = props => {
             </div>
             <div>
               <h5>Coletado por</h5>
-              <p>{`(VERIFICAR COMO BUSCAR O TOKEN DO USUÁRIO) do usuário ${objError.user.name}`}</p>
+              <p>{`Usuário ${objError.user.name}: ${getUser().token}`}</p>
             </div>
           </div>
         </div>

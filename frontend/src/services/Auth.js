@@ -1,18 +1,20 @@
 const TOKEN_TAG = "token"
 const USER_TAG = "user"
 
-const isAuth = () => getUser().token
+const isAuth = () => getUser().authtoken
 
-const setUser = (user, token) => {
+const setUser = ({ user, token }) => {
   localStorage.setItem(USER_TAG, JSON.stringify(user))
   localStorage.setItem(TOKEN_TAG, token)
 }
 
 const getUser = () => {
  const user = localStorage.getItem(USER_TAG)
+ const token = localStorage.getItem(TOKEN_TAG)
  return ({
     "user": user && JSON.parse(user),
-    "token": localStorage.getItem(TOKEN_TAG)
+    "authtoken": token,
+    "token": token && token.substring(token.lastIndexOf('.') + 1)
   })
 }
 

@@ -4,7 +4,7 @@ const URL = "http://localhost:3030"
 
 const authHeader = () => {
   return new Headers({
-    'Authorization': `Bearer ${getUser && getUser.token}`
+    'Authorization': `Bearer ${getUser && getUser.authtoken}`
   })
 }
 
