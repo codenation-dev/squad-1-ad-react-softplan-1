@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
-import { getLogs } from "../api";
 
 const List = () => {
   const [fullList, setFullList] = useState([]);
@@ -13,7 +12,7 @@ const List = () => {
     fetch("http://localhost:3030/logs", { 
       method: 'GET', 
       headers: {
-        ["Authorization"]: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U",
+        ["Authorization"]: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjA2M2I3MzdmMWNhMzQ2YzIzMjUyYyIsImlhdCI6MTU3NjExODE1MiwiZXhwIjoxNTc2Mzc3MzUyfQ.R5ndgjz6DikmHttqyXsnbAO9S2qgxQ9OVXfEWiRMYts",
       }, 
       mode: 'cors', 
       cache: 'default' 
