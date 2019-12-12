@@ -4,6 +4,7 @@ import { Home } from "../pages/Home";
 import { ErrorDetails } from "../components/ErrorDetails";
 import { NotFound } from "../components/NotFound";
 import { isAuth } from "../components/Auth";
+import { User } from "../components/User";
 
 const PrivateRoute = ({ component: Component, ...params }) => (
   <Route
@@ -28,6 +29,7 @@ const Routes = () => (
       <Route exact path="/error-details/:id" component={ErrorDetails}></Route>
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" render={() => <div>Login</div>}></Route>
+      <Route exact path="/new-user" render={User}></Route>
       <Route path="*" render={() => <Redirect to="/404" />}></Route>
     </Switch>
   </>
