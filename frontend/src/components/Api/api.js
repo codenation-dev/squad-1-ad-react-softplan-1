@@ -1,53 +1,41 @@
 import axios from "axios";
-import { setupCache } from 'axios-cache-adapter'
-import { getToken } from "../Auth/Auth"
+import { setupCache } from "axios-cache-adapter";
+import { getToken} from "../Auth"
 
 const cache = setupCache({
-    maxAge: 15 * 60 * 1000
-})
+  maxAge: 15 * 60 * 1000
+});
 
 const API = axios.create({
   baseURL: "http://localhost:3030",
   adapter: cache.adapter
-})
+});
 
-const getLogs = async () => {
-    let config = {
-        headers: {
-            "Authorization": `bearer ${getToken()}`,
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-            "Access-Control-Allow-Headers": "Authorization, Origin, X-Requested-With, Content-Type, Accept"
-        }
-    };
-    const { data } = await API.get("/logs/", config);
-    return data;
-}
+const getConfig = () => {
+  let config = {
+    headers: {
+      //Authorization: `beare ${getToken()}`
+      Authorization: `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjA2M2I3MzdmMWNhMzQ2YzIzMjUyYyIsImlhdCI6MTU3NjExODE1MiwiZXhwIjoxNTc2Mzc3MzUyfQ.R5ndgjz6DikmHttqyXsnbAO9S2qgxQ9OVXfEWiRMYts`,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+      "Access-Control-Allow-Headers":
+        "Authorization, Origin, X-Requested-With, Content-Type, Accept"
+    }
+  };
+  return config;
+};
 
-// const getLogs = () => {
-//     var myHeaders = new Headers({
-//         "Authorization": `bearer ${getToken()}`,
-//         "Content-Type": "application/json",
-//         "Access-Control-Allow-Origin": "*",
-//         "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-//         "Access-Control-Allow-Headers": "Authorization, Origin, X-Requested-With, Content-Type, Accept"
-//       });
- 
-//     var myInit = { method: 'GET',
-//                    headers: myHeaders,
-//                    mode: 'cors',
-//                    cache: 'default' };
-                   
-//     return fetch("http://localhost:3030/logs", myInit)
-//       .then(resp => {
-//           if (!resp.ok)
-//             console.log("Não foi possível completar a requisição.");
-//             else{
-//                 return resp.json()
-//             }
-//       })
-//       .then(logs => logs)
-//       .catch(error => console.log(error));
-//   };
-export { getLogs };
+const getErrors = async () => {
+  let config = getConfig();
+  const { data } = await API.get("/logs/", config);
+  return data;
+};
+
+const getErrorsById = async (userId) => {
+  let config = getConfig();
+  const { data } = await API.get(`/logs/${userId}`, config);
+  return data;
+};
+
+export { getErrors, getErrorsById };

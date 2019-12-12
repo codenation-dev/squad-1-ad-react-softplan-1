@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Badge } from "react-bootstrap";
 import { BackToHome } from "../BackToHome";
+import { getErrorsById } from "../Api/api.js";
 
 const ErrorDetails = props => {
   const [objError, setObjError] = useState({
@@ -21,29 +22,17 @@ const ErrorDetails = props => {
     level: ""
   });
 
-  const getErrosById = () => {
-    fetch(`http://localhost:3030/logs/${props.match.params.id}`, {
-      method: "GET",
-      headers: {
-        ["Authorization"]:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjA2M2I3MzdmMWNhMzQ2YzIzMjUyYyIsImlhdCI6MTU3NjExODE1MiwiZXhwIjoxNTc2Mzc3MzUyfQ.R5ndgjz6DikmHttqyXsnbAO9S2qgxQ9OVXfEWiRMYts"
-      },
-      mode: "cors",
-      cache: "default"
-    })
-      .then(response => {
-        if (!response.ok) throw new Error();
-
-        return response.json();
-      })
-      .then(data => setObjError(data))
-      .catch(error =>
-        console.log("Erro ao buscar os detalhes do erro! ", error)
-      );
+  const getItemById = async () => {
+    try {
+      let data = await getErrorsById(props.match.params.id);
+      setObjError(data)
+    } catch (error) {
+      console.log("Erro ao buscar os detalhes do erro: ", error);
+    }
   };
 
   useEffect(() => {
-    getErrosById();
+    getItemById();
   }, []);
 
   return (
