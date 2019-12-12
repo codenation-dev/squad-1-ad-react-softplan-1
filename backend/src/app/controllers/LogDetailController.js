@@ -10,7 +10,7 @@ class LogDetailController {
         {
           _id: new mongoose.Types.ObjectId(id),
         },
-        ['description', 'lastOccurrence', 'origin', 'occurrences']
+        ['description', 'lastOccurrence', 'origin', 'occurrences', 'level']
       );
 
       const user = await User.findOne(
@@ -20,7 +20,7 @@ class LogDetailController {
         ['name', 'email']
       );
 
-      const { description, lastOccurrence, origin, occurrences } = logs;
+      const { description, lastOccurrence, origin, occurrences, level } = logs;
 
       return res.json({
         user,
@@ -28,6 +28,7 @@ class LogDetailController {
         lastOccurrence,
         origin,
         occurrences,
+        level
       });
     } catch (err) {
       return res
