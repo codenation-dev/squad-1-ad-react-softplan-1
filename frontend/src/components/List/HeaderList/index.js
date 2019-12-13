@@ -24,16 +24,18 @@ const HeaderList = props => {
 
   return (
     <>
-      <InputGroup className="mb-3">
+      <InputGroup>
         <SelectedList
           title="Origem"
           options={["Todas", "Produção", "Homologação", "Dev"]}
           handleChange={props.changeAmbiente}
+          classname="pr-3 pb-3"
         />
         <SelectedList
           title="Ordenar por"
-          options={["Nenhum", "Level", "Frequência"]}
+          options={["Data", "Level", "Frequência"]}
           handleChange={props.changeOrderBy}
+          classname="pr-3 pb-3"
         />
         <SelectedList
           title="Buscar por"
@@ -47,12 +49,12 @@ const HeaderList = props => {
             onChange={handleChange}
           />
         </Form>
-        <InputGroup.Append>
+        <InputGroup.Append className="pb-3">
           <InputGroup.Text>Pesquisar</InputGroup.Text>
         </InputGroup.Append>
       </InputGroup>
       <ButtonGroup className="mb-3">
-        <Button variant="light" onClick={props.archivedSelected}>
+        <Button variant="light" className="mr-4" onClick={props.archivedSelected}>
           Arquivar
         </Button>
         <Button variant="light" onClick={props.deleteSelected}>

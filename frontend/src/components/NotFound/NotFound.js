@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSadCry } from "@fortawesome/free-solid-svg-icons";
 import { BackToHome } from "../BackToHome";
 
-const NotFound = props => (
+const NotFound = ({ history }) => (
   <Card className="text-center">
     <Card.Header>Erro 404</Card.Header>
     <Card.Body>
@@ -16,7 +16,7 @@ const NotFound = props => (
           size="10x"
         />
       </Card.Text>
-      <BackToHome history={props.history}/>
+      <BackToHome history={history}/>
     </Card.Body>
   </Card>
 );
