@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { getUser} from "./Auth"
+import { getUser } from "./Auth";
 
 const cache = setupCache({
   maxAge: 15 * 60 * 1000
@@ -33,7 +33,7 @@ const getErrors = async () => {
   return data;
 };
 
-const getErrorsById = async (userId) => {
+const getErrorsById = async userId => {
   let config = getConfig();
   const { data } = await API.get(`/logs/${userId}`, config);
   return data;
@@ -45,7 +45,7 @@ const deleteError = async id => {
   return data;
 };
 
-const setArchived = id => {
+const setArchived = async id => {
   let config = getConfig();
   const { data } = API.put(`/logs/${id}/archive`, [], config);
   return data;
