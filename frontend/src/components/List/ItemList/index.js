@@ -1,5 +1,5 @@
 import React from "react";
-import { InputGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const Item = props => {
   const handleChange = () => {
@@ -12,8 +12,10 @@ const Item = props => {
 
   return (
     <tr>
-      <th scope="row">
-        <InputGroup.Checkbox
+      <th scope="row" style={{cursor: "pointer"}}>
+        <Form.Check
+          inline
+          type="checkbox"
           value={props.item.selected}
           checked={props.item.selected}
           onChange={() => handleChange()}
