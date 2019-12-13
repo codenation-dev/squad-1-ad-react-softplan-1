@@ -39,4 +39,16 @@ const getErrorsById = async (userId) => {
   return data;
 };
 
-export { getErrors, getErrorsById };
+const deleteError = async id => {
+  let config = getConfig();
+  const { data } = await API.delete(`/logs/${id}`, config);
+  return data;
+};
+
+const setArchived = id => {
+  let config = getConfig();
+  const { data } = API.put(`/logs/${id}/archive`, [], config);
+  return data;
+};
+
+export { getErrors, getErrorsById, deleteError, setArchived };
