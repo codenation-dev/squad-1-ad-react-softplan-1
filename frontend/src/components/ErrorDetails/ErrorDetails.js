@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Badge } from "react-bootstrap";
 import { BackToHome } from "../BackToHome";
-import { getErrorsById } from "../Api/api.js";
+import { getErrorsById } from "../../services/Api"
 
 const ErrorDetails = props => {
   const [objError, setObjError] = useState({
