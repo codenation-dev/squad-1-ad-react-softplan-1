@@ -4,28 +4,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { logout, getUser, isAuth } from "../../../services/Auth";
 
-const redirect = () => {
-  window.location = "./";
-}
-
-const handleLogout = () => {
-  logout({ redirect });
-}
-
-const firstName = getUser().user && getUser().user.name && getUser().user.name.split(' ')[0];
-
-const welcome = isAuth() 
-  ? `Bem-vindo ${firstName}! Seu token é: ${getUser().token}`
-  : `Bem-vindo!`;
-
-//TODO Remover esta funcao - Apagar quando login estiver feito e redirecionar para ./login
-const login = () => {
-  localStorage.setItem("user", JSON.stringify({"name": "Nome User"}))
-  localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U")
-  redirect()
-}
-
 const UserMenu = () => {
+  
+  const redirect = () => {
+    window.location = "./";
+  }
+  
+  const handleLogout = () => {
+    logout({ redirect });
+  }
+  
+  const firstName = getUser().user && getUser().user.name && getUser().user.name.split(' ')[0];
+  
+  const welcome = isAuth() 
+    ? `Bem-vindo ${firstName}! Seu token é: ${getUser().token}`
+    : `Bem-vindo!`;
+  
+  //TODO Remover esta funcao - Apagar quando login estiver feito e redirecionar para ./login
+  const login = () => {
+    localStorage.setItem("user", JSON.stringify({"name": "Nome User"}))
+    localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U")
+    redirect()
+  }
+
   return (
     <>
       <Navbar.Text className="d-md-block d-lg-block d-none d-xl-block">{welcome}</Navbar.Text> 
