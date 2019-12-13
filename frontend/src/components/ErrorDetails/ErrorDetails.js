@@ -37,6 +37,15 @@ const ErrorDetails = props => {
     }
   };
 
+  const formatDate = dateString => {
+    const date = dateString && new Date(dateString)
+    const day = date && date.getDate().toString().padStart(2, '0')
+    const month = date && (date.getMonth() + 1).toString().padStart(2, '0')
+    const hour = date && date.getHours().toString().padStart(2, '0')
+    const minute = date && date.getMinutes().toString().padStart(2, '0')
+    return `${day}/${month}/${date && date.getFullYear()} ${hour}:${minute}`
+  };
+
   useEffect(() => {
     getItemById();
   }, []);
@@ -50,7 +59,7 @@ const ErrorDetails = props => {
           <Loading />
         ) : (
           <div>
-            <h1 className="mb-3">{`Erro no ${objError.origin} em ${objError.lastOccurrence.date}`}</h1>
+            <h1 className="mb-3">{`Erro no ${objError.origin} em ${formatDate(objError.lastOccurrence.date)}`}</h1>
             <div className="row d-flex align-items-center">
               <div className="col-sm-12 col-md-8">
                 <h5>Título</h5>
