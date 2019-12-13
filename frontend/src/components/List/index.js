@@ -5,7 +5,6 @@ import {
   getErrors,
   setArchived,
   deleteError,
-  markedArchived
 } from "../../services/Api";
 
 const List = props => {
