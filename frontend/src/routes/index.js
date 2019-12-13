@@ -1,10 +1,11 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Home } from "../pages/Home";
+import { Login } from "../pages/Login";
+import { SignUp } from "../pages/SignUp";
 import { ErrorDetails } from "../components/ErrorDetails";
 import { NotFound } from "../components/NotFound";
 import { isAuth } from "../services/Auth";
-import { User } from "../components/User";
 
 const PrivateRoute = ({ component: Component, ...params }) => (
   <Route
@@ -23,8 +24,8 @@ const Routes = () => (
       <PrivateRoute exact path="/" component={Home}></PrivateRoute>
       <PrivateRoute exact path="/error-details/:id" component={ErrorDetails}></PrivateRoute>
       <Route exact path="/404" component={NotFound}></Route>
-      <Route exact path="/login" render={() => <div>Login</div>}></Route>
-      <Route exact path="/new-user" render={User}></Route>
+      <Route exact path="/login" component={Login}></Route>
+      <Route exact path="/new-user" render={SignUp}></Route>
       <Route path="*" render={() => <Redirect to="/404" />}></Route>
     </Switch>
   </>

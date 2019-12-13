@@ -11,10 +11,12 @@ const API = axios.create({
   adapter: cache.adapter
 });
 
+const token = getUser() && getUser().authtoken;
+
 const getConfig = () => {
   let config = {
     headers: {
-      Authorization: `bearer ${getUser() && getUser().authtoken}`,
+      Authorization: `bearer ${token}`,
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
