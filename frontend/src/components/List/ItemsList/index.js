@@ -1,26 +1,24 @@
 import React from "react";
 import Item from "../ItemList";
-import { Table, InputGroup } from "react-bootstrap";
+import { Table, Form } from "react-bootstrap";
 
 const Items = props => (
   <Table striped bordered hover>
     <thead>
       <tr>
         <th>
-          <InputGroup>
-            <InputGroup.Checkbox
-              value={props.selectAll}
-              checked={props.selectAll}
-              onChange={e => props.setSelectAll(e.target.checked)}
-            />
-          </InputGroup>
+          <Form.Check
+            value={props.selectAll}
+            checked={props.selectAll}
+            onChange={e => props.setSelectAll(e.target.checked)}
+          />
         </th>
         <th>Level</th>
         <th>Log</th>
         <th>Eventos</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody style={{cursor: "pointer"}}>
       {props.listError.map((item, idx) => {
         return (
           <Item
