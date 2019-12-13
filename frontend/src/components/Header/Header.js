@@ -1,25 +1,25 @@
-import React from "react"
-import { Navbar, NavDropdown, Container } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faReact } from "@fortawesome/free-brands-svg-icons"
-import { faUser } from "@fortawesome/free-solid-svg-icons"
-import { logout, getUser, isAuth } from "../../services/Auth"
+import React from "react";
+import { Navbar, NavDropdown, Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faReact } from "@fortawesome/free-brands-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { logout, getUser, isAuth } from "../../services/Auth";
 
 const Header = () => {
 
   const redirect = () => {
-    window.location = "./"
+    window.location = "./";
   }
 
   const handleLogout = () => {
-    logout({ redirect })
+    logout({ redirect });
   }
 
-  const firstName = getUser().user && getUser().user.name && getUser().user.name.split(' ')[0]  
+  const firstName = getUser().user && getUser().user.name && getUser().user.name.split(' ')[0];
 
   const welcome = isAuth() 
     ? `Bem-vindo ${firstName}! Seu token é: ${getUser().token}`
-    : `Bem-vindo!`
+    : `Bem-vindo!`;
 
   //TODO Remover esta funcao - Apagar quando login estiver feito e redirecionar para ./login
   const login = () => {
@@ -47,7 +47,7 @@ const Header = () => {
         </NavDropdown>
       </Container>
     </Navbar>
-  )
+  );
 }
 
-export default Header
+export default Header;
