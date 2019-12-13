@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ButtonGroup, Badge } from "react-bootstrap";
 
 import { BackToHome } from "../BackToHome";
-import { Loading } from "../Loading"
-import { getErrorsById } from "../../services/Api"
+import { Loading } from "../Loading";
+import { getErrorsById } from "../../services/Api";
 
 const ErrorDetails = props => {
   const [objError, setObjError] = useState({
@@ -24,26 +24,26 @@ const ErrorDetails = props => {
     level: ""
   });
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const getItemById = async () => {
     setIsLoading(true)
     try {
       let data = await getErrorsById(props.match.params.id);
-      setObjError(data)
-      setIsLoading(false)
+      setObjError(data);
+      setIsLoading(false);
     } catch (error) {
       console.log("Erro ao buscar os detalhes do erro: ", error);
     }
   };
 
   const formatDate = dateString => {
-    const date = dateString && new Date(dateString)
-    const day = date && date.getDate().toString().padStart(2, '0')
-    const month = date && (date.getMonth() + 1).toString().padStart(2, '0')
-    const hour = date && date.getHours().toString().padStart(2, '0')
-    const minute = date && date.getMinutes().toString().padStart(2, '0')
-    return `${day}/${month}/${date && date.getFullYear()} ${hour}:${minute}`
+    const date = dateString && new Date(dateString);
+    const day = date && date.getDate().toString().padStart(2, '0');
+    const month = date && (date.getMonth() + 1).toString().padStart(2, '0');
+    const hour = date && date.getHours().toString().padStart(2, '0');
+    const minute = date && date.getMinutes().toString().padStart(2, '0');
+    return `${day}/${month}/${date && date.getFullYear()} ${hour}:${minute}`;
   };
 
   useEffect(() => {

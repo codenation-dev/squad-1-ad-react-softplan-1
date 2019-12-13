@@ -1,7 +1,6 @@
 import React from "react";
 import { Spinner, Container, Row, Col } from "react-bootstrap";
 
-
 const Loading = () => (
   <Container>
     <Row>
