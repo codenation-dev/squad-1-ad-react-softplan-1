@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
-import { getErrors } from "../../services/Api"
+import {
+  getErrors,
+  setArchived,
+  deleteError,
+  markedArchived
+} from "../../services/Api";
 
 const List = props => {
   const [fullList, setFullList] = useState([]);
@@ -44,32 +49,21 @@ const List = props => {
     setListError(items);
   };
 
-  const markedArchived = id => {
-    // Definir como vai atualizar na API
-  };
-
   const archiveSelected = () => {
     let items = listError;
     let bUpdated = false;
     listError.forEach(item => {
       if (item.selected) {
-        markedArchived(item.id);
+        setArchived(item._id);
         item.archived = item.selected;
         bUpdated = true;
       }
     });
 
-    // Abaixo fazer o cógido abaixo ou chamar o método: getListErrors(); para evitar
-    // consulta no banco de dados. Porém melhor deixar consultar para garantir os dados
-    // ou terá que ter muito controle se foi concluído com sucesso a alteração
     if (bUpdated) {
       items = items.filter(item => !item.archived);
       setFullList(items);
     }
-  };
-
-  const deleteError = id => {
-    // Definir como vai excluir na API
   };
 
   const deleteSelected = () => {
@@ -77,13 +71,12 @@ const List = props => {
     let bUpdated = false;
     items.forEach(item => {
       if (item.selected) {
-        deleteError(item.id);
+        deleteError(item._id);
         item.removed = item.selected;
         bUpdated = true;
       }
     });
 
-    // Abaixo fazer o cógido abaixo ou chamar o método: getListErrors();
     if (bUpdated) {
       items = items.filter(item => !item.removed);
       setFullList(items);
@@ -137,7 +130,8 @@ const List = props => {
         archivedSelected={archiveSelected}
         deleteSelected={deleteSelected}
       />
-      <Items history={props.history}
+      <Items
+        history={props.history}
         listError={listError}
         setSelected={setSelected}
         selectAll={selectAll}
