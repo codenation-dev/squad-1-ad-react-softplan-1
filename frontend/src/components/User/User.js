@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { createNewUser } from "../../services/Api.js";
+import { FormControl } from "../Common/FormControl";
 
 const User = () => {
   const [validated, setValidated] = useState(false);
@@ -49,52 +50,44 @@ const User = () => {
       <Card.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Row>
-            <Form.Group controlId="nameValidation">
-              <Form.Label>Nome</Form.Label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Nome"
-                value={userName}
-                onChange={handleChange}
-                autoFocus
-                name="nome"
-              />
-              <Form.Control.Feedback>Nome válido!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Nome inválido!
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="emailValidation">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                placeholder="exemplo@email.com"
-                value={userEmail}
-                onChange={handleChange}
-                name="email"
-              />
-              <Form.Control.Feedback>Email válido!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Email inválido!
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="passwordValidation">
-              <Form.Label>Senha</Form.Label>
-              <Form.Control
-                required
-                type="password"
-                placeholder="******"
-                value={userPassword}
-                onChange={handleChange}
-                name="password"
-              />
-              <Form.Control.Feedback>Senha válida!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Senha inválida!
-              </Form.Control.Feedback>
-            </Form.Group>
+            <FormControl
+              controlId="nomeValidation"
+              label="Nome"
+              required="true"
+              type="text"
+              placeholder="Nome"
+              value={userName}
+              onChange={handleChange}
+              autoFocus="true"
+              name="nome"
+              goodFeedback="Nome válido!"
+              badFeedback="Nome inválido!"
+            />
+            <FormControl
+              controlId="emailValidation"
+              label="Email"
+              required="true"
+              type="email"
+              placeholder="exemplo@email.com"
+              value={userEmail}
+              onChange={handleChange}
+              autoFocus="false"
+              name="email"
+              goodFeedback="Email válido!"
+              badFeedback="Email inválido!"
+            />
+            <FormControl
+              controlId="passwordValidation"
+              label="Senha"
+              required="true"
+              type="password"
+              placeholder="******"
+              value={userPassword}
+              onChange={handleChange}
+              name="password"
+              goodFeedback="Senha válida!"
+              badFeedback="Senha inválida!"
+            />
           </Form.Row>
           <Button type="submit">Submit form</Button>
         </Form>
