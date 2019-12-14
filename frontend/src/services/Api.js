@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { getUser } from "./Auth.js";
+import { getUser, setUser } from "./Auth.js";
 
 const cache = setupCache({
   maxAge: 15 * 60 * 1000
@@ -74,8 +74,8 @@ const archiveError = async id => {
 const createNewUser = async (name, email, password) => {
   let config = getConfig();
   try {
-    var data = `{"name": \"${name}\","email": \"${email}\","password": \"${password}\"}`;
-    await API.post(`/users`, data, config);
+    var payLoad = `{"name": \"${name}\","email": \"${email}\","password": \"${password}\"}`;
+    await API.post(`/users`, payLoad, config);
     return true;
   } catch (error) {
     console.log("Erro ao cadastrar novo usuário: ", error);
@@ -83,4 +83,24 @@ const createNewUser = async (name, email, password) => {
   }
 };
 
-export { getErrors, getErrorById, deleteError, archiveError, createNewUser };
+const loginUser = async (email, password) => {
+  let config = getConfig();
+  try {
+    var payLoad = `{"email": \"${email}\","password": \"${password}\"}`;
+    var { data } = await API.post(`/sessions`, payLoad, config);
+    setUser(data);
+    return true;
+  } catch (error) {
+    console.log("Erro ao fazer o login: ", error);
+    return false;
+  }
+};
+
+export {
+  getErrors,
+  getErrorById,
+  deleteError,
+  archiveError,
+  createNewUser,
+  loginUser
+};

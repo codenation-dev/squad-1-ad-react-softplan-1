@@ -6,12 +6,8 @@ import { logout, getUser, isAuth } from "../../../services/Auth";
 import { Link } from "react-router-dom";
 
 const UserMenu = () => {
-  const redirect = path => {
-    window.location = path;
-  };
-
   const handleLogout = () => {
-    logout({ redirect });
+    logout();
   };
 
   const firstName =
@@ -20,16 +16,6 @@ const UserMenu = () => {
   const welcome = isAuth()
     ? `Bem-vindo ${firstName}! Seu token é: ${getUser().token}`
     : `Bem-vindo!`;
-
-  //TODO Remover esta funcao - Apagar quando login estiver feito e redirecionar para ./login
-  const login = () => {
-    localStorage.setItem("user", JSON.stringify({ name: "Nome User" }));
-    localStorage.setItem(
-      "token",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZjBkYmJjNmNjNDUyNDc2NDJhNzRkNyIsImlhdCI6MTU3NjA2NjEwMSwiZXhwIjoxNTc2MzI1MzAxfQ.PUYRVw5Ff9ThBqLH4s4RcOIrheXwHen9nhpso0f2R5U"
-    );
-    redirect();
-  };
 
   return (
     <>
@@ -41,13 +27,11 @@ const UserMenu = () => {
         alignRight
       >
         {isAuth() ? (
-          <NavDropdown.Item onClick={handleLogout}>Sair</NavDropdown.Item>
+          <Link to={"./login"} onClick={handleLogout}>Sair</Link>
         ) : (
-          <div>
-            <NavDropdown.Item onClick={login}>Login</NavDropdown.Item>
-            <NavDropdown.Item>
-              <Link to={"./signup"}>Cadastro</Link>
-            </NavDropdown.Item>
+          <div className="d-flex flex-column">
+            <Link to={"./login"}>Login</Link>
+            <Link to={"./signup"}>Cadastro</Link>
           </div>
         )}
       </NavDropdown>

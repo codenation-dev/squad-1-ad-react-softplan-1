@@ -62,7 +62,6 @@ const ErrorDetails = props => {
 
   useEffect(() => {
     setUser(getUser());
-    console.log(getUser())
     getItemById();
   }, []);
 

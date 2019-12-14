@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
-import { createNewUser } from "../../services/Api.js";
+import { loginUser } from "../../services/Api.js";
 import { FormControl } from "../Common/FormControl";
 
-const User = () => {
+const UserLogin = () => {
   const [validated, setValidated] = useState(false);
-  const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
-  const createUser = async () => {
-    if (await createNewUser(userName, userEmail, userPassword)) {
+  const login = async () => {
+    if (await loginUser(userEmail, userPassword)) {
       redirect();
     }
   };
 
   const redirect = () => {
-    window.location = "./login";
+    window.location = "./";
   };
 
   const handleSubmit = event => {
@@ -28,7 +27,7 @@ const User = () => {
       return;
     }
     setValidated(true);
-    createUser();
+    login();
   };
 
   const handleChange = event => {
@@ -36,7 +35,6 @@ const User = () => {
     const { name, value } = event.target;
 
     let actions = {
-      ["nome"]: setUserName,
       ["email"]: setUserEmail,
       ["password"]: setUserPassword
     };
@@ -46,23 +44,10 @@ const User = () => {
 
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Header>Novo Usuário</Card.Header>
+      <Card.Header>Login</Card.Header>
       <Card.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Row>
-            <FormControl
-              controlId="nomeValidation"
-              label="Nome"
-              required="true"
-              type="text"
-              placeholder="Nome"
-              value={userName}
-              onChange={handleChange}
-              autoFocus="true"
-              name="nome"
-              goodFeedback="Nome válido!"
-              badFeedback="Nome inválido!"
-            />
             <FormControl
               controlId="emailValidation"
               label="Email"
@@ -89,11 +74,11 @@ const User = () => {
               badFeedback="Senha inválida!"
             />
           </Form.Row>
-          <Button type="submit">Salvar</Button>
+          <Button type="submit">Login</Button>
         </Form>
       </Card.Body>
     </Card>
   );
 };
 
-export default User;
+export default UserLogin;
