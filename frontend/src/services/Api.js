@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { getUser } from "./Auth";
+import { getUser } from "./Auth.js";
 
 const cache = setupCache({
   maxAge: 15 * 60 * 1000
@@ -29,26 +29,58 @@ const getConfig = () => {
 
 const getErrors = async () => {
   let config = getConfig();
-  const { data } = await API.get("/logs/", config);
-  return data;
+  try {
+    const { data } = await API.get("/logs/", config);
+    return data;
+  } catch (error) {
+    console.log("Erro ao buscar os itens da lista: ", error);
+    return [];
+  }
 };
 
-const getErrorsById = async userId => {
+const getErrorById = async id => {
   let config = getConfig();
-  const { data } = await API.get(`/logs/${userId}`, config);
-  return data;
+  try {
+    const { data } = await API.get(`/logs/${id}`, config);
+    return data;
+  } catch (error) {
+    console.log("Erro ao buscar os detalhes do erro: ", error);
+    return [];
+  }
 };
 
 const deleteError = async id => {
   let config = getConfig();
-  const { data } = await API.delete(`/logs/${id}`, config);
-  return data;
+  try {
+    await API.delete(`/logs/${id}`, config);
+    return true;
+  } catch (error) {
+    console.log("Erro ao deletar o erro: ", error);
+    return false;
+  }
 };
 
-const setArchived = async id => {
+const archiveError = async id => {
   let config = getConfig();
-  const { data } = API.put(`/logs/${id}/archive`, [], config);
-  return data;
+  try {
+    await API.put(`/logs/${id}/archive`, [], config);
+    return true;
+  } catch (error) {
+    console.log("Erro ao arquivar o erro: ", error);
+    return false;
+  }
 };
 
-export { getErrors, getErrorsById, deleteError, setArchived };
+const createNewUser = async (name, email, password) => {
+  let config = getConfig();
+  try {
+    var data = `{"name": \"${name}\","email": \"${email}\","password": \"${password}\"}`;
+    await API.post(`/users`, data, config);
+    return true;
+  } catch (error) {
+    console.log("Erro ao cadastrar novo usuário: ", error);
+    return false;
+  }
+};
+
+export { getErrors, getErrorById, deleteError, archiveError, createNewUser };
