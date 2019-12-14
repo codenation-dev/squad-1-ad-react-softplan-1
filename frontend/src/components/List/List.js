@@ -40,13 +40,19 @@ const List = props => {
     setListError(items);
   };
 
+  const confirmLogout = text => window.confirm(text);
+
   const archiveSelected = () => {
     let items = listError;
     let bUpdated = false;
     listError.forEach(item => {
-      if (item.selected && archiveError(item._id)) {
-        item.archived = item.selected;
-        bUpdated = true;
+      if (item.selected) {
+        if (confirmLogout(`Deseja arquivar o item: ${item._id}`)) {
+          if (archiveError(item._id)) {
+            item.archived = item.selected;
+            bUpdated = true;
+          }
+        }
       }
     });
 
@@ -60,9 +66,13 @@ const List = props => {
     let items = listError;
     let bUpdated = false;
     items.forEach(item => {
-      if (item.selected && deleteError(item._id)) {
-        item.removed = item.selected;
-        bUpdated = true;
+      if (item.selected) {
+        if (confirmLogout(`Deseja deletar o item: ${item._id}`)) {
+          if (deleteError(item._id)) {
+            item.removed = item.selected;
+            bUpdated = true;
+          }
+        }
       }
     });
 
