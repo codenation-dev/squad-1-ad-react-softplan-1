@@ -50,9 +50,11 @@ const HeaderList = props => {
             onChange={handleChange}
           />
         </Form>
-        <InputGroup.Append className="pb-3">
-          <InputGroup.Text>Pesquisar</InputGroup.Text>
-        </InputGroup.Append>
+        <ButtonGroup className="pb-3">
+          <Button variant="light" className="mr-1" onClick={handleSubmit}>
+            Pesquisar
+          </Button>
+        </ButtonGroup>
       </InputGroup>
       <ButtonGroup className="mb-3">
         <Button

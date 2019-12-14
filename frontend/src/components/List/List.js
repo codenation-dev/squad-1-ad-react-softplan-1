@@ -73,11 +73,20 @@ const List = props => {
   };
 
   const aplicarFiltro = filtro => {
-    alert(`filtrou por:${searchBy} e ${filtro}`);
-    setFullList([]);
-    // Vai filtrar no array ou no banco de dados ?
-    // O Certo seria no banco de dados.
-    // getListErrors(PassarParâmetrosNecessários)
+    if (filtro !== "") {
+      let items = fullList.filter(item => {
+        return (
+          item.description.title.search(filtro) !== -1 ||
+          item.description.stacktrace.search(filtro) !== -1 ||
+          item.origin.search(filtro) !== -1 ||
+          item.level.search(filtro) !== -1 ||
+          item.occurrences.toString().search(filtro) !== -1
+        );
+      });
+      setListError(items);
+    } else {
+      setListError(fullList);
+    }
   };
 
   const changeAmbiente = filterAmbiente => {

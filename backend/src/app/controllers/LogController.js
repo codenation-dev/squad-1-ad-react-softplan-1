@@ -8,6 +8,7 @@ class LogController {
         'environment',
         'level',
         'description',
+        'origin',
         'occurrences',
       ]);
 
