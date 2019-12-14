@@ -11,12 +11,10 @@ const API = axios.create({
   adapter: cache.adapter
 });
 
-const token = getUser() && getUser().authtoken;
-
 const getConfig = () => {
   let config = {
     headers: {
-      Authorization: `bearer ${token}`,
+      Authorization: `bearer ${getUser().authtoken}`,
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
@@ -88,7 +86,7 @@ const loginUser = async (email, password) => {
   try {
     var payLoad = `{"email": \"${email}\","password": \"${password}\"}`;
     var { data } = await API.post(`/sessions`, payLoad, config);
-    setUser(data);
+    await setUser(data);
     return true;
   } catch (error) {
     console.log("Erro ao fazer o login: ", error);
