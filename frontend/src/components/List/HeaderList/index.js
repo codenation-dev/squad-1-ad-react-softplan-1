@@ -29,18 +29,19 @@ const HeaderList = props => {
           title="Origem"
           options={["Todas", "Produção", "Homologação", "Dev"]}
           handleChange={props.changeAmbiente}
-          classname="pr-3 pb-3"
+          classname="pr-1 pb-2"
         />
         <SelectedList
           title="Ordenar por"
           options={["Data", "Level", "Frequência"]}
           handleChange={props.changeOrderBy}
-          classname="pr-3 pb-3"
+          classname="pr-1 pb-2"
         />
         <SelectedList
           title="Buscar por"
           options={["Todos", "Level", "Descrição", "Origem"]}
           handleChange={props.changeSearchBy}
+          classname="pr-1 pb-2"
         />
         <Form noValidate onSubmit={handleSubmit}>
           <FormControl
@@ -54,10 +55,10 @@ const HeaderList = props => {
         </InputGroup.Append>
       </InputGroup>
       <ButtonGroup className="mb-3">
-        <Button variant="light" className="mr-4" onClick={props.archivedSelected}>
+        <Button variant="light" className="mr-1" onClick={props.archivedSelected}>
           Arquivar
         </Button>
-        <Button variant="light" onClick={props.deleteSelected}>
+        <Button variant="light" className="mr-1" onClick={props.deleteSelected}>
           Apagar
         </Button>
       </ButtonGroup>

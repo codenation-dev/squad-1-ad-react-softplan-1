@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
-import {
-  getErrors,
-  setArchived,
-  deleteError,
-} from "../../services/Api";
+import { getErrors, archiveError, deleteError } from "../../services/Api";
 
 const List = props => {
   const [fullList, setFullList] = useState([]);
@@ -14,16 +10,12 @@ const List = props => {
   const [selectAll, setSelectAll] = useState(false);
 
   const getListErrors = async () => {
-    try {
-      let errors = await getErrors();
-      errors.forEach(item => {
-        item.selected = false;
-      });
-      setFullList(errors);
-      setListError(errors);
-    } catch (error) {
-      console.log("Erro ao buscar os itens da lista: ", error);
-    }
+    let errors = await getErrors();
+    errors.forEach(item => {
+      item.selected = false;
+    });
+    setFullList(errors);
+    setListError(errors);
   };
 
   useEffect(() => {
@@ -52,8 +44,7 @@ const List = props => {
     let items = listError;
     let bUpdated = false;
     listError.forEach(item => {
-      if (item.selected) {
-        setArchived(item._id);
+      if (item.selected && archiveError(item._id)) {
         item.archived = item.selected;
         bUpdated = true;
       }
@@ -69,8 +60,7 @@ const List = props => {
     let items = listError;
     let bUpdated = false;
     items.forEach(item => {
-      if (item.selected) {
-        deleteError(item._id);
+      if (item.selected && deleteError(item._id)) {
         item.removed = item.selected;
         bUpdated = true;
       }

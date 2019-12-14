@@ -25,7 +25,7 @@ const Routes = () => (
       <PrivateRoute exact path="/error-details/:id" component={ErrorDetails}></PrivateRoute>
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" component={Login}></Route>
-      <Route exact path="/new-user" render={SignUp}></Route>
+      <Route exact path="/signup" render={SignUp}></Route>
       <Route path="*" render={() => <Redirect to="/404" />}></Route>
     </Switch>
   </>

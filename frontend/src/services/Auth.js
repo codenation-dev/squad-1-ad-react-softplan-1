@@ -25,10 +25,9 @@ const login = ({ user, token, redirect }) => {
   }
 }
 
-const logout = ({ redirect }) => {
+const logout = () => {
   localStorage.removeItem(TOKEN_TAG)
   localStorage.removeItem(USER_TAG)
-  redirect()
 }
 
 export { 
