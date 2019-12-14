@@ -4,16 +4,20 @@ import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
 import { ErrorDetails } from "../components/ErrorDetails";
-import { NotFound } from "../components/NotFound";
+import { NotFound } from "../pages/NotFound";
 import { isAuth } from "../services/Auth";
 
 const PrivateRoute = ({ component: Component, ...params }) => (
   <Route
     {...params}
     render={props =>
-      isAuth() 
-      ? <Component {...props} />
-      : <Redirect to={{ pathname: "./login", state: { from: props.location } }} />
+      isAuth() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: "./login", state: { from: props.location } }}
+        />
+      )
     }
   />
 );
@@ -22,10 +26,14 @@ const Routes = () => (
   <>
     <Switch>
       <PrivateRoute exact path="/" component={Home}></PrivateRoute>
-      <PrivateRoute exact path="/error-details/:id" component={ErrorDetails}></PrivateRoute>
+      <PrivateRoute
+        exact
+        path="/error-details/:id"
+        component={ErrorDetails}
+      ></PrivateRoute>
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" component={Login}></Route>
-      <Route exact path="/signup" render={SignUp}></Route>
+      <Route exact path="/signup" component={SignUp}></Route>
       <Route path="*" render={() => <Redirect to="/404" />}></Route>
     </Switch>
   </>

@@ -8,12 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <header>
-        <Header
-          user={{
-            name: "Fake",
-            token: "129dnsd9182dndskashsa"
-          }}
-        />
+        <Header />
       </header>
       <Routes />
     </BrowserRouter>
