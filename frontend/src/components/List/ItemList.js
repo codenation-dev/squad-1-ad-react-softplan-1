@@ -1,9 +1,21 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { Creators as Actions } from "../../store/ducks/error";
+import { useSelector } from "react-redux";
 
 const Item = props => {
+  const filteredErrors = useSelector(({ error: { filteredErrors } }) => filteredErrors);
+  const dispatch = useDispatch()
+
+  const setSelected = idx => {
+    filteredErrors[idx].selected = !filteredErrors[idx].selected;
+    let items = filteredErrors.filter(e => e);
+    dispatch(Actions.updateFilteredErrors(items));
+  };
+
   const handleChange = () => {
-    props.setSelected(props.idx);
+    setSelected(props.idx);
   };
 
   const goToErrorPage = () => {
@@ -23,7 +35,6 @@ const Item = props => {
       </th>
       <td onClick={goToErrorPage}>{props.item.level}</td>
       <td onClick={goToErrorPage} className="">
-        {console.log(props.item)}
         <div>{props.item.description.title}</div>
         <div>{props.item.origin}</div>
       </td>

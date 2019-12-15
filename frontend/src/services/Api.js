@@ -25,10 +25,14 @@ const getConfig = () => {
   return config;
 };
 
-const getErrors = async () => {
+const getErrors = async load => {
   let config = getConfig();
   try {
     const { data } = await API.get("/logs/", config);
+    data.forEach(item => {
+      item.selected = false;
+    });
+    load(data);
     return data;
   } catch (error) {
     console.log("Erro ao buscar os itens da lista: ", error);
@@ -36,7 +40,7 @@ const getErrors = async () => {
   }
 };
 
-const getErrorById = async id => {
+const getErrorById = async (id, remove) => {
   let config = getConfig();
   try {
     const { data } = await API.get(`/logs/${id}`, config);
@@ -47,10 +51,11 @@ const getErrorById = async id => {
   }
 };
 
-const deleteError = async id => {
+const deleteError = async (id, remove) => {
   let config = getConfig();
   try {
     await API.delete(`/logs/${id}`, config);
+    remove(id);
     return true;
   } catch (error) {
     console.log("Erro ao deletar o erro: ", error);
@@ -58,10 +63,11 @@ const deleteError = async id => {
   }
 };
 
-const archiveError = async id => {
+const archiveError = async (id, archive) => {
   let config = getConfig();
   try {
     await API.put(`/logs/${id}/archive`, [], config);
+    archive(id);
     return true;
   } catch (error) {
     console.log("Erro ao arquivar o erro: ", error);
