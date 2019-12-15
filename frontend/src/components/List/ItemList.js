@@ -1,9 +1,11 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+import { connect } from "react-redux";
+import { setSelected } from "../../actions";
 
 const Item = props => {
   const handleChange = () => {
-    props.setSelected(props.idx);
+    props.setSelected(props.item._id);
   };
 
   const goToErrorPage = () => {
@@ -23,7 +25,6 @@ const Item = props => {
       </th>
       <td onClick={goToErrorPage}>{props.item.level}</td>
       <td onClick={goToErrorPage} className="">
-        {console.log(props.item)}
         <div>{props.item.description.title}</div>
         <div>{props.item.origin}</div>
       </td>
@@ -32,4 +33,8 @@ const Item = props => {
   );
 };
 
-export default Item;
+const mapDispatchToProps = dispatch => ({
+  setSelected: selected => dispatch(setSelected(selected))
+});
+
+export default connect(null, mapDispatchToProps)(Item);

@@ -1,6 +1,8 @@
 import React from "react";
 import Item from "./ItemList";
 import { Table, Form } from "react-bootstrap";
+import { connect } from "react-redux";
+import { setSelectedAll } from "../../actions";
 
 const Items = props => (
   <Table striped bordered hover>
@@ -8,9 +10,11 @@ const Items = props => (
       <tr>
         <th>
           <Form.Check
-            value={props.selectAll}
-            checked={props.selectAll}
-            onChange={e => props.setSelectAll(e.target.checked)}
+            value={props.allSelected}
+            checked={props.allSelected}
+            onChange={e =>
+              props.setSelectedAll(props.allSelected, props.listError)
+            }
           />
         </th>
         <th>Level</th>
@@ -20,18 +24,20 @@ const Items = props => (
     </thead>
     <tbody style={{ cursor: "pointer" }}>
       {props.listError.map((item, idx) => {
-        return (
-          <Item
-            key={idx}
-            item={item}
-            idx={idx}
-            setSelected={props.setSelected}
-            history={props.history}
-          />
-        );
+        return <Item key={idx} item={item} history={props.history} />;
       })}
     </tbody>
   </Table>
 );
 
-export default Items;
+const mapStateToProps = state => ({
+  listError: state.listError,
+  allSelected: state.allSelected
+});
+
+const mapDispatchToProps = dispatch => ({
+  setSelectedAll: (select, listError) =>
+    dispatch(setSelectedAll(select, listError))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Items);

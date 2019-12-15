@@ -25,48 +25,24 @@ const getConfig = () => {
   return config;
 };
 
-const getErrors = async () => {
+const getErrors = () => {
   let config = getConfig();
-  try {
-    const { data } = await API.get("/logs/", config);
-    return data;
-  } catch (error) {
-    console.log("Erro ao buscar os itens da lista: ", error);
-    return [];
-  }
+  return API.get("/logs/", config);
 };
 
-const getErrorById = async id => {
+const getErrorById = id => {
   let config = getConfig();
-  try {
-    const { data } = await API.get(`/logs/${id}`, config);
-    return data;
-  } catch (error) {
-    console.log("Erro ao buscar os detalhes do erro: ", error);
-    return [];
-  }
+  return API.get(`/logs/${id}`, config);
 };
 
-const deleteError = async id => {
+const deleteError = async ids => {
   let config = getConfig();
-  try {
-    await API.delete(`/logs/${id}`, config);
-    return true;
-  } catch (error) {
-    console.log("Erro ao deletar o erro: ", error);
-    return false;
-  }
+  return await API.delete(`/logs/${ids}`, config);
 };
 
-const archiveError = async id => {
+const archiveError = async ids => {
   let config = getConfig();
-  try {
-    await API.put(`/logs/${id}/archive`, [], config);
-    return true;
-  } catch (error) {
-    console.log("Erro ao arquivar o erro: ", error);
-    return false;
-  }
+  return await API.put(`/logs/${ids}/archive`, [], config);
 };
 
 const createNewUser = async (name, email, password) => {

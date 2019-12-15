@@ -8,18 +8,42 @@ import {
   Form
 } from "react-bootstrap";
 
+import { connect } from "react-redux";
+import {
+  archiveSelected,
+  deleteSelected,
+  changeAmbiente,
+  changeOrderBy,
+  applyFilter
+} from "../../actions";
+
 const HeaderList = props => {
   const [filtro, setFiltro] = useState("");
+  const [, setSearchBy] = useState("");
+
+  const changeSearchBy = searchBy => setSearchBy(searchBy);
 
   const handleSubmit = event => {
     event.preventDefault();
     event.stopPropagation();
-    props.aplicarFiltro(filtro);
+    props.applyFilter(filtro);
   };
 
   const handleChange = event => {
     event.preventDefault();
     setFiltro(event.target.value);
+  };
+
+  const handleArchive = () => {
+    if (window.confirm("Deseja arquivar todos os itens selecionados?")) {
+      props.archiveSelected(props.listError);
+    }
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("Deseja deletar todos os itens selecionados?")) {
+      props.deleteSelected(props.listError);
+    }
   };
 
   return (
@@ -40,7 +64,7 @@ const HeaderList = props => {
         <SelectedList
           title="Buscar por"
           options={["Todos", "Level", "Descrição", "Origem"]}
-          handleChange={props.changeSearchBy}
+          handleChange={changeSearchBy}
           classname="pr-1 pb-2"
         />
         <Form noValidate onSubmit={handleSubmit}>
@@ -57,14 +81,10 @@ const HeaderList = props => {
         </ButtonGroup>
       </InputGroup>
       <ButtonGroup className="mb-3">
-        <Button
-          variant="light"
-          className="mr-1"
-          onClick={props.archivedSelected}
-        >
+        <Button variant="light" className="mr-1" onClick={handleArchive}>
           Arquivar
         </Button>
-        <Button variant="light" className="mr-1" onClick={props.deleteSelected}>
+        <Button variant="light" className="mr-1" onClick={handleDelete}>
           Apagar
         </Button>
       </ButtonGroup>
@@ -72,4 +92,16 @@ const HeaderList = props => {
   );
 };
 
-export default HeaderList;
+const mapStateToProps = state => ({
+  listError: state.listError
+});
+
+const mapDispatchToProps = dispatch => ({
+  archiveSelected: listErrors => dispatch(archiveSelected(listErrors)),
+  deleteSelected: listErrors => dispatch(deleteSelected(listErrors)),
+  changeAmbiente: filterAmbiente => dispatch(changeAmbiente(filterAmbiente)),
+  changeOrderBy: orderBy => dispatch(changeOrderBy(orderBy)),
+  applyFilter: filter => dispatch(applyFilter(filter))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderList);

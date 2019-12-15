@@ -1,152 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
-import { getErrors, archiveError, deleteError } from "../../services/Api";
+import { Loading } from "../Loading";
+
+import { connect } from "react-redux";
+import { getAllErrors } from "../../actions";
 
 const List = props => {
-  const [fullList, setFullList] = useState([]);
-  const [listError, setListError] = useState([]);
-  const [searchBy, setSearchBy] = useState("");
-  const [selectAll, setSelectAll] = useState(false);
-
-  const getListErrors = async () => {
-    let errors = await getErrors();
-    errors.forEach(item => {
-      item.selected = false;
-    });
-    setFullList(errors);
-    setListError(errors);
-  };
-
   useEffect(() => {
-    getListErrors();
+    props.getAllErrors();
   }, []);
-
-  useEffect(() => {
-    listError.forEach(item => {
-      item.selected = selectAll;
-    });
-    let items = listError.filter(e => e);
-    setListError(items);
-  }, [selectAll]);
-
-  useEffect(() => {
-    setListError(fullList);
-  }, [fullList]);
-
-  const setSelected = idx => {
-    listError[idx].selected = !listError[idx].selected;
-    let items = listError.filter(e => e);
-    setListError(items);
-  };
-
-  const confirmLogout = text => window.confirm(text);
-
-  const archiveSelected = () => {
-    let items = listError;
-    let bUpdated = false;
-    listError.forEach(item => {
-      if (item.selected) {
-        if (confirmLogout(`Deseja arquivar o item: ${item._id}`)) {
-          if (archiveError(item._id)) {
-            item.archived = item.selected;
-            bUpdated = true;
-          }
-        }
-      }
-    });
-
-    if (bUpdated) {
-      items = items.filter(item => !item.archived);
-      setFullList(items);
-    }
-  };
-
-  const deleteSelected = () => {
-    let items = listError;
-    let bUpdated = false;
-    items.forEach(item => {
-      if (item.selected) {
-        if (confirmLogout(`Deseja deletar o item: ${item._id}`)) {
-          if (deleteError(item._id)) {
-            item.removed = item.selected;
-            bUpdated = true;
-          }
-        }
-      }
-    });
-
-    if (bUpdated) {
-      items = items.filter(item => !item.removed);
-      setFullList(items);
-    }
-  };
-
-  const aplicarFiltro = filtro => {
-    if (filtro !== "") {
-      let items = fullList.filter(item => {
-        return (
-          item.description.title.search(filtro) !== -1 ||
-          item.description.stacktrace.search(filtro) !== -1 ||
-          item.origin.search(filtro) !== -1 ||
-          item.level.search(filtro) !== -1 ||
-          item.occurrences.toString().search(filtro) !== -1
-        );
-      });
-      setListError(items);
-    } else {
-      setListError(fullList);
-    }
-  };
-
-  const changeAmbiente = filterAmbiente => {
-    let filters = {
-      ["Produção"]: "production",
-      ["Homologação"]: "homologation",
-      ["Dev"]: "development"
-    };
-    let filter = filters[filterAmbiente];
-    let items = fullList;
-    if (filter) items = items.filter(e => e.environment === filter);
-    setListError(items);
-  };
-
-  const changeOrderBy = orderBy => {
-    if (orderBy === "Frequência") {
-      listError.sort((a, b) => {
-        return a.occurrences - b.occurrences;
-      });
-    }
-    if (orderBy === "Level") {
-      listError.sort((a, b) => {
-        return a.level === "warning" ? 1 : -1;
-      });
-    }
-    let items = listError.filter(e => e);
-    setListError(items);
-  };
-
-  const changeSearchBy = searchBy => setSearchBy(searchBy);
 
   return (
     <div className="m-3 p-4">
-      <HeaderList
-        changeAmbiente={changeAmbiente}
-        changeOrderBy={changeOrderBy}
-        changeSearchBy={changeSearchBy}
-        aplicarFiltro={aplicarFiltro}
-        archivedSelected={archiveSelected}
-        deleteSelected={deleteSelected}
-      />
-      <Items
-        history={props.history}
-        listError={listError}
-        setSelected={setSelected}
-        selectAll={selectAll}
-        setSelectAll={setSelectAll}
-      />
+      <HeaderList />
+      {props.isLoading ? <Loading /> : <Items history={props.history} />}
     </div>
   );
 };
 
-export default List;
+const mapStateToProps = state => ({
+  listError: state.listError,
+  isLoading: state.isLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  getAllErrors: () => dispatch(getAllErrors())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

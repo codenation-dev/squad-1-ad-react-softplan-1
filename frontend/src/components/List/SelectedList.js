@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 const SelectedList = props => {
-
   const [title, setTitle] = useState(props.title);
 
   const options = props.options.map((elem, idx) => (
@@ -12,9 +11,9 @@ const SelectedList = props => {
   ));
 
   const handleChange = value => {
-    setTitle(value)
-    props.handleChange(value)
-  }
+    setTitle(value);
+    props.handleChange(value);
+  };
 
   return (
     <Dropdown
