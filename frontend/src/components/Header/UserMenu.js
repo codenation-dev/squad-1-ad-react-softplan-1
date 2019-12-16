@@ -3,7 +3,6 @@ import { Navbar, NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "../../services/Auth";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
 import { useSelector } from "react-redux";
