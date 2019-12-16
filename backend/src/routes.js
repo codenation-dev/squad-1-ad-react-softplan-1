@@ -5,6 +5,7 @@ import multerConfig from './config/multer';
 import authMiddleware from './app/middlewares/auth';
 
 import UserController from './app/controllers/UserController';
+import UserDetailController from './app/controllers/UserDetailController';
 import FileController from './app/controllers/FileController';
 import SessionController from './app/controllers/SessionController';
 import LogController from './app/controllers/LogController';
@@ -20,6 +21,7 @@ routes.post('/sessions', SessionController.store);
 routes.use(authMiddleware);
 
 routes.get('/users', UserController.index);
+routes.get('/users/:id/detail', UserDetailController.index);
 routes.get('/logs', LogController.index);
 routes.post('/logs', LogController.store);
 routes.delete('/logs/:id', LogController.delete);
