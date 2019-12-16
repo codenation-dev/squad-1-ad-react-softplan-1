@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "../../services/Auth";
@@ -19,13 +20,7 @@ const UserMenu = () => {
 
   const handleLogout = () => {
     logout(SetUserLogeOut);
-    redirect("./login");
-    
   };
-
-  const redirect = path => {
-    window.location = path;
-  }
 
   const firstName =
     user && user.name && user.name.split(" ")[0];
@@ -44,11 +39,11 @@ const UserMenu = () => {
         alignRight
       >
         {isAuth ? (
-          <NavDropdown.Item onClick={handleLogout}>Sair</NavDropdown.Item>
+           <Link to={"./login"} onClick={handleLogout} className="px-4 p-2">Sair</Link>
         ) : (
           <div className="d-flex flex-column">
-            <NavDropdown.Item onClick={() => redirect('./login')}>Login</NavDropdown.Item>
-            <NavDropdown.Item onClick={() => redirect('./signup')}>Cadastro</NavDropdown.Item>
+            <Link to={"./login"} className="px-4 p-2">Login</Link>
+            <Link to={"./signup"} className="px-4 p-2">Cadastro</Link>
           </div>
         )}
       </NavDropdown>
