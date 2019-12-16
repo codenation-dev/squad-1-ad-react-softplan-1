@@ -15,6 +15,7 @@ const LogSchema = new Schema({
     date: Date,
     user: String,
   },
+  token: String,
   removed: Boolean,
   archived: Boolean,
 });
