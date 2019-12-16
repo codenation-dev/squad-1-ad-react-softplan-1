@@ -4,6 +4,7 @@ import { Table, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/error";
 import { useSelector } from "react-redux";
+import { isMobile } from "react-device-detect"
 
 const Items = props => {
   const filteredErrors = useSelector(({ error: { filteredErrors } }) => filteredErrors);
@@ -32,10 +33,10 @@ const Items = props => {
           </th>
           <th>Level</th>
           <th>Log</th>
-          <th>Eventos</th>
+          <th>{isMobile ? "#" : "Eventos"}</th>
         </tr>
       </thead>
-      <tbody style={{ cursor: "pointer", wordBreak: "break-all" }}>
+      <tbody style={{ cursor: "pointer" }}>
         {filteredErrors.map((item, idx) => {
           return (
             <Item
