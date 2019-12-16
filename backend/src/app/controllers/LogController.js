@@ -1,4 +1,6 @@
+import mongoose from 'mongoose';
 import Log from '../models/Log';
+import User from '../models/User';
 
 class LogController {
   async index(req, res) {
@@ -26,6 +28,15 @@ class LogController {
       const log = new Log(req.body);
       log.lastOccurrence.date = new Date();
       log.lastOccurrence.user = req.userId;
+
+      const user = await User.findOne(
+        {
+          _id: new mongoose.Types.ObjectId(req.userId),
+        },
+        ['token']
+      );
+
+      log.token = user.token;
       log.save();
 
       return res.json(log);

@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import User from '../models/User';
 
 class UserController {
@@ -29,6 +30,8 @@ class UserController {
         .min(6),
     });
 
+
+
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
@@ -38,12 +41,16 @@ class UserController {
     if (userExists) {
       return res.status(400).json({ error: 'User already exists.' });
     }
-    const { id, name, email } = await User.create(req.body);
+
+    req.body.token = await bcrypt.hash( req.body.email, 4);
+
+    const { id, name, email, token } = await User.create(req.body);
 
     return res.json({
       id,
       name,
       email,
+      token,
     });
   }
 }
