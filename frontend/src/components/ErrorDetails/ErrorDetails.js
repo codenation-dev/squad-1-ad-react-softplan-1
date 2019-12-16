@@ -40,7 +40,8 @@ const ErrorDetails = props => {
 
   useEffect(() => {
     getItemById();
-  }, []);
+  }, []);//eslint-disable-line
+  // Desabilitado o eslint pois não vou ficar especificamente a função getItemById 
 
   return (
     <div className="m-3 p-4">

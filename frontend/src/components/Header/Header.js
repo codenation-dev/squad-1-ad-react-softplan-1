@@ -13,7 +13,7 @@ const Header = () => (
     expand="lg"
     className="align-items-center"
   >
-    <Navbar.Brand href="./">
+    <Navbar.Brand href="/">
       <FontAwesomeIcon
         icon={faReact}
         size="2x"
