@@ -18,7 +18,8 @@ const Items = props => {
     });
     let items = filteredErrors.filter(e => e);
     dispatch(Actions.updateFilteredErrors(items));
-  }, [selectAll]);
+  }, [selectAll]);//eslint-disable-line
+  // Foi desabilitado o eslint pois não é necessário ficar escutando as alterações nos métodos "dispatch" e "filteredErrors"
 
   return (
     <Table striped bordered hover>

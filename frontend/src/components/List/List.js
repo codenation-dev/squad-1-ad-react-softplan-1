@@ -20,7 +20,8 @@ const List = props => {
 
   useEffect(() => {
     getListErrors();
-  }, []);
+  }, []); //eslint-disable-line
+  // Desabilitado o eslint pois não vou ficar especificamente a função getListErrors 
 
   return (
     <div className="m-3 p-2 px-md-4 px-xl-4">

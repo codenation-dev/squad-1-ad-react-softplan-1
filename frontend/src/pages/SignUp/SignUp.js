@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { createNewUser } from "../../services/Api.js";
 import { FormControl } from "../../components/FormControl";
+import { Link } from "react-router-dom";
 
 const SignUp = props => {
   const [validated, setValidated] = useState(false);
@@ -36,17 +37,22 @@ const SignUp = props => {
     const { name, value } = event.target;
 
     let actions = {
-      ["nome"]: setUserName,
-      ["email"]: setUserEmail,
-      ["password"]: setUserPassword
+      "nome": setUserName,
+      "email": setUserEmail,
+      "password": setUserPassword
     };
 
     actions[name](value);
   };
 
+  const cardSize = {
+    width: "250px",
+    minWidth: "250px"
+  };
+
   return (
     <div className="p-5 d-flex justify-content-center align-items-center">
-      <Card style={{ width: "18rem" }}>
+      <Card style={cardSize}>
         <Card.Header>Novo Usuário</Card.Header>
         <Card.Body>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -90,7 +96,10 @@ const SignUp = props => {
                 badFeedback="Senha inválida!"
               />
             </Form.Row>
-            <Button type="submit">Salvar</Button>
+            <div className="d-flex justify-content-between align-items-end">
+              <Button type="submit">Salvar</Button>
+              <Link to={"./login"}>Login</Link>
+            </div>
           </Form>
         </Card.Body>
       </Card>

@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/error";
 import { useSelector } from "react-redux";
-
+import { formatDate } from "../../utils";
 const Item = props => {
   const filteredErrors = useSelector(({ error: { filteredErrors } }) => filteredErrors);
   const dispatch = useDispatch()
@@ -37,6 +37,7 @@ const Item = props => {
       <td onClick={goToErrorPage} className="" style={{wordBreak: "break-all"}}>
         <div>{props.item.description.title}</div>
         <div>{props.item.origin}</div>
+        <div>{formatDate(props.item.lastOccurrence.date)}</div>
       </td>
       <td onClick={goToErrorPage}>{props.item.occurrences}</td>
     </tr>

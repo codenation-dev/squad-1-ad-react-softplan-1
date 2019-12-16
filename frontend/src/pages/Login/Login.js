@@ -1,33 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { loginUser } from "../../services/Api.js";
 import { FormControl } from "../../components/FormControl";
-import { setUser } from "../../services/Auth";
+import { setUser, setUserFromStorage } from "../../services/Auth";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Login = props => {
   const [validated, setValidated] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const isAuth = useSelector(({ auth: { isAuth } }) => isAuth);
   const dispatch = useDispatch();
 
   const SetUserOnStorage = async (user, setUserLogedIn) => {
     await setUser(user, setUserLogedIn);
   };
 
-  const SetUserLogedIn = (user) => {
+  const SetUserLogedIn = user => {
     dispatch(Actions.setAuth(true));
     dispatch(Actions.setUser(user));
   };
 
   const login = async () => {
-    if (await loginUser(userEmail, userPassword, SetUserOnStorage, SetUserLogedIn)) {
-      redirect();
+    if (
+      await loginUser(userEmail, userPassword, SetUserOnStorage, SetUserLogedIn)
+    ) {
+      redirectToHome();
     }
   };
 
-  const redirect = () => {
+  const redirectToHome = () => {
     props.history.push("/");
   };
 
@@ -48,16 +53,32 @@ const Login = props => {
     const { name, value } = event.target;
 
     let actions = {
-      ["email"]: setUserEmail,
-      ["password"]: setUserPassword
+      "email": setUserEmail,
+      "password": setUserPassword
     };
 
     actions[name](value);
   };
 
+  useEffect(() => {
+    //console.clear();
+    setUserFromStorage(SetUserLogedIn);
+  }, []);//eslint-disable-line
+  // Desabilitado o eslint pois não vou ficar especificamente a função setUserFromStorage 
+
+  useEffect(() => {
+    if (isAuth) redirectToHome();
+  }, [isAuth]); //eslint-disable-line
+  // Desabilitado o eslint pois não vou ficar especificamente a função redirectToHome 
+
+  const cardSize = {
+    width: "250px",
+    minWidth: "250px"
+  };
+
   return (
     <div className="p-5 d-flex justify-content-center align-items-center">
-      <Card style={{ width: "18rem" }}>
+      <Card style={cardSize}>
         <Card.Header>Login</Card.Header>
         <Card.Body>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -88,7 +109,10 @@ const Login = props => {
                 badFeedback="Senha inválida!"
               />
             </Form.Row>
-            <Button type="submit">Login</Button>
+            <div className="d-flex justify-content-between align-items-end">
+              <Button type="submit">Login</Button>
+              <Link to={"./signup"}>Cadastrar</Link>
+            </div>
           </Form>
         </Card.Body>
       </Card>
