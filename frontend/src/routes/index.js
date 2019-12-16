@@ -24,12 +24,13 @@ const PrivateRoute = ({ component: Component, ...params }) => {
       }
     />
   );
-}
+};
 
 const Routes = () => (
   <>
     <Switch>
       <PrivateRoute exact path="/" component={Home}></PrivateRoute>
+      <Route exact path="/error-details/login" render={() => <Redirect to="/login" />}></Route>
       <PrivateRoute
         exact
         path="/error-details/:id"
@@ -38,7 +39,7 @@ const Routes = () => (
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" component={Login}></Route>
       <Route exact path="/signup" component={SignUp}></Route>
-      <Route path="*" render={() => <Redirect to="/404" />}></Route>
+      <Route path="*" render={() => <Redirect to="/404" />}></Route>      
     </Switch>
   </>
 );

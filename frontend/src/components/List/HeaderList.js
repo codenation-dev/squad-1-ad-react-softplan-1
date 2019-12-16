@@ -87,7 +87,7 @@ const HeaderList = () => {
           items = allErrors.filter(item => item.level.match(pattern));
           break;
         case "Origem":
-          items = allErrors.filter(item => item.origin.match(pattern));
+          items = allErrors.filter(item => item.environment.match(pattern));
           break;
         case "Descrição":
           items = allErrors.filter(item => {
