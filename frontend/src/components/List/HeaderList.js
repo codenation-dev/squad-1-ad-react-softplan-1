@@ -48,47 +48,66 @@ const HeaderList = () => {
   };
 
   const changeAmbiente = filterAmbiente => {
-    let filters = {
+    const filters = {
       ["Produção"]: "production",
       ["Homologação"]: "homologation",
       ["Dev"]: "development"
     };
-    let filter = filters[filterAmbiente];
+    const filter = filters[filterAmbiente];
     let items = allErrors;
     if (filter) items = items.filter(e => e.environment === filter);
     dispatch(Actions.updateFilteredErrors(items));
   };
 
   const changeOrderBy = orderBy => {
-    if (orderBy === "Frequência") {
-      filteredErrors.sort((a, b) => {
-        return a.occurrences - b.occurrences;
-      });
+    switch (orderBy) {
+      case "Frequência":
+        filteredErrors.sort((a, b) => a.occurrences - b.occurrences);
+        break;
+      case "Level":
+        filteredErrors.sort((a, b) => a.level.localeCompare(b.level));
+        break;
+      default:
+        filteredErrors.sort((a, b) => (
+          new Date(b.lastOccurrence.date) - new Date(a.lastOccurrence.date))
+        );
     }
-    if (orderBy === "Level") {
-      filteredErrors.sort((a, b) => {
-        return a.level.localeCompare(b.level);
-      });
-    }
-    //Falta ordenação por data
-    let items = filteredErrors.filter(e => e);
+    const items = filteredErrors.filter(e => e);
     dispatch(Actions.updateFilteredErrors(items));
   };
 
   const changeSearchBy = searchBy => setSearchBy(searchBy);
 
-  const aplicarFiltro = filtro => {
-    //Falta arrumar para filtrar de acordo com o searchBy
-    if (filtro !== "") {
-      let items = allErrors.filter(item => {
-        return (
-          item.description.title.search(filtro) !== -1 ||
-          item.description.stacktrace.search(filtro) !== -1 ||
-          item.origin.search(filtro) !== -1 ||
-          item.level.search(filtro) !== -1 ||
-          item.occurrences.toString().search(filtro) !== -1
-        );
-      });
+  const applyFilter = filter => {
+    let items = []
+    if (filter) {
+      const pattern = new RegExp(filter.trim(), "i");
+      switch (searchBy) {
+        case "Level":
+          items = allErrors.filter(item => item.level.match(pattern));
+          break;
+        case "Origem":
+          items = allErrors.filter(item => item.origin.match(pattern));
+          break;
+        case "Descrição":
+          items = allErrors.filter(item => {
+            return (
+              item.description.title.match(pattern) ||
+              item.description.stacktrace.match(pattern)
+            );
+          });
+          break;
+        default:
+          items = allErrors.filter(item => {
+            return (
+              item.description.title.match(pattern) ||
+              item.description.stacktrace.match(pattern) ||
+              item.origin.match(pattern) ||
+              item.level.match(pattern) ||
+              item.occurrences.toString().match(pattern)
+            );
+          });
+      }
       dispatch(Actions.updateFilteredErrors(items));
     } else {
       dispatch(Actions.updateFilteredErrors(allErrors));
@@ -98,7 +117,7 @@ const HeaderList = () => {
   const handleSubmit = event => {
     event.preventDefault();
     event.stopPropagation();
-    aplicarFiltro(filtro);
+    applyFilter(filtro);
   };
 
   const handleChange = event => {
