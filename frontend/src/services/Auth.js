@@ -5,7 +5,6 @@ const setUser = async ({ user, token }, setUserLogedIn) => {
   localStorage.setItem(USER_TAG, JSON.stringify(user));
   localStorage.setItem(TOKEN_TAG, token);
   user.authtoken = token;
-  user.token = token && token.substring(token.lastIndexOf(".") + 1);
   setUserLogedIn(user);
 };
 
@@ -21,7 +20,6 @@ const setUserFromStorage = setUserLogedIn => {
   if (data && token) {
     let user = data && JSON.parse(data);
     user.authtoken = token;
-    user.token = token && token.substring(token.lastIndexOf(".") + 1);
     setUserLogedIn(user);
   }
 };
