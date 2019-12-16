@@ -60,12 +60,10 @@ const Login = props => {
   };
 
   useEffect(() => {
-    console.log("aqui");
     setUserFromStorage(SetUserLogedIn);
   }, []);
 
   useEffect(() => {
-    console.log("aqui ó");
     if (isAuth) redirectToHome();
   }, [isAuth]);
 
