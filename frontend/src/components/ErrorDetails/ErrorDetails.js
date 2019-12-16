@@ -93,7 +93,7 @@ const ErrorDetails = props => {
               <div>
                 <h5>Coletado por</h5>
                 <p>{user.name}</p>
-                <p Style="overflow-wrap: break-word;">{user.authtoken}</p>
+                <p style={{overflowWrap: "break-word"}}>{user.authtoken}</p>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { setUser, setUserFromStorage } from "../../services/Auth";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Login = props => {
   const [validated, setValidated] = useState(false);
@@ -60,6 +61,7 @@ const Login = props => {
   };
 
   useEffect(() => {
+    //console.clear();
     setUserFromStorage(SetUserLogedIn);
   }, []);
 
@@ -67,9 +69,14 @@ const Login = props => {
     if (isAuth) redirectToHome();
   }, [isAuth]);
 
+  const cardSize = {
+    width: "250px",
+    minWidth: "250px"
+  };
+
   return (
     <div className="p-5 d-flex justify-content-center align-items-center">
-      <Card style={{ width: "18rem" }}>
+      <Card style={cardSize}>
         <Card.Header>Login</Card.Header>
         <Card.Body>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -100,7 +107,10 @@ const Login = props => {
                 badFeedback="Senha inválida!"
               />
             </Form.Row>
-            <Button type="submit">Login</Button>
+            <div className="d-flex justify-content-between align-items-end">
+              <Button type="submit">Login</Button>
+              <Link to={"./signup"}>Cadastrar</Link>
+            </div>
           </Form>
         </Card.Body>
       </Card>
