@@ -10,11 +10,12 @@ import {
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/error";
 import { useSelector } from "react-redux";
-import { getErrors, archiveError, deleteError } from "../../services/Api";
+import { archiveError, deleteError } from "../../services/Api";
 
 const HeaderList = () => {
   const allErrors = useSelector(({ error: { allErrors } }) => allErrors);
   const filteredErrors = useSelector(({ error: { filteredErrors } }) => filteredErrors); 
+  const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
 
   const [filtro, setFiltro] = useState("");
@@ -30,7 +31,7 @@ const HeaderList = () => {
     filteredErrors.forEach(item => {
       if (item.selected) {
         if (confirmAction(`Deseja arquivar o item: ${item._id}`)) {
-          archiveError(item._id, removeDeleted);
+          archiveError(item._id, removeDeleted, user);
         }
       }
     });
@@ -40,7 +41,7 @@ const HeaderList = () => {
     filteredErrors.forEach(item => {
       if (item.selected) {
         if (confirmAction(`Deseja deletar o item: ${item._id}`)) {
-          deleteError(item._id, removeDeleted);
+          deleteError(item._id, removeDeleted, user);
         }
       }
     });

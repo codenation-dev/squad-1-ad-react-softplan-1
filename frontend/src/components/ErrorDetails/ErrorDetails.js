@@ -30,7 +30,7 @@ const ErrorDetails = props => {
 
   const getItemById = async () => {
     setIsLoading(true);
-    let data = await getErrorById(props.match.params.id);
+    let data = await getErrorById(props.match.params.id, user);
     if (data.length === 0)
       props.history.push("/");
     setObjError(data);

@@ -4,16 +4,18 @@ import HeaderList from "./HeaderList";
 import { getErrors } from "../../services/Api";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/error";
+import { useSelector } from "react-redux";
 
 const List = props => {
+  const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
 
   const setErrors = (data) => {
     dispatch(Actions.setErrors(data));
   };
 
-  const getListErrors = async () => {
-    await getErrors(setErrors);
+  const getListErrors = async () => {    
+    await getErrors(setErrors, user);
   };
 
   useEffect(() => {
