@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-mongoose.connect("mongodb+srv://squadreact:react123@cluster0-jwbee.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect('mongodb://localhost:27017/app', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
