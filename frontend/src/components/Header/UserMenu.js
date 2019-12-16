@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
 import { useSelector } from "react-redux";
 
-const UserMenu = ({ history }) => {
+const UserMenu = () => {
   const isAuth = useSelector(({ auth: { isAuth } }) => isAuth);
   const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
