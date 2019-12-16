@@ -30,7 +30,7 @@ const UserMenu = () => {
     : `Faça seu login`;
 
   return (
-    <>
+    <div className="d-flex flex-row justify-content-end align-items-center">
       <Navbar.Text className="d-md-block d-lg-block d-none d-xl-block">
         {welcome}
       </Navbar.Text>
@@ -49,7 +49,7 @@ const UserMenu = () => {
           </div>
         )}
       </NavDropdown>
-    </>
+    </div>
   );
 };
 

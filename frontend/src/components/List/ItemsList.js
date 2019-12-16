@@ -35,7 +35,7 @@ const Items = props => {
           <th>Eventos</th>
         </tr>
       </thead>
-      <tbody style={{ cursor: "pointer" }}>
+      <tbody style={{ cursor: "pointer", wordBreak: "break-all" }}>
         {filteredErrors.map((item, idx) => {
           return (
             <Item

@@ -23,7 +23,7 @@ const List = props => {
   }, []);
 
   return (
-    <div className="m-3 p-4">
+    <div className="m-3 p-2 p-md-4 p-xl-4">
       <HeaderList />
       <Items
         history={props.history}

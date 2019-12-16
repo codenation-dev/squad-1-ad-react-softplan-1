@@ -1,8 +1,7 @@
 import React from "react";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReact } from "@fortawesome/free-brands-svg-icons";
-import { isMobile } from "react-device-detect";
 import UserMenu from "./UserMenu.js";
 
 const Header = () => (
@@ -11,7 +10,7 @@ const Header = () => (
     variant="dark"
     sticky="top"
     expand="lg"
-    className="align-items-center"
+    className="d-flex align-items-center justify-content-between"
   >
     <Navbar.Brand href="./">
       <FontAwesomeIcon
@@ -19,15 +18,9 @@ const Header = () => (
         size="2x"
         className="d-inline-block align-middle"
       />{" "}
-      Central de Erros
+        Central de Erros
     </Navbar.Brand>
-    {isMobile ? (
-      <UserMenu />
-    ) : (
-      <Container className="justify-content-end">
-        <UserMenu />
-      </Container>
-    )}
+    <UserMenu />
   </Navbar>
 );
 
