@@ -3,9 +3,11 @@ import { ButtonGroup, Badge } from "react-bootstrap";
 import { BackToHome } from "../BackToHome";
 import { Loading } from "../Loading";
 import { getErrorById } from "../../services/Api";
-import { getUser } from "../../services/Auth.js";
+import { useSelector } from "react-redux";
 
 const ErrorDetails = props => {
+  const user = useSelector(({ auth: { user } }) => user);
+
   const [objError, setObjError] = useState({
     user: {
       email: "",
@@ -23,7 +25,6 @@ const ErrorDetails = props => {
     occurrences: 0,
     level: ""
   });
-  const [user, setUser] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -61,7 +62,6 @@ const ErrorDetails = props => {
   };
 
   useEffect(() => {
-    setUser(getUser());
     getItemById();
   }, []);
 
@@ -92,7 +92,7 @@ const ErrorDetails = props => {
               </div>
               <div>
                 <h5>Coletado por</h5>
-                <p>{user.user.name}</p>
+                <p>{user.name}</p>
                 <p Style="overflow-wrap: break-word;">{user.authtoken}</p>
               </div>
             </div>

@@ -5,22 +5,26 @@ import { Login } from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
 import { ErrorDetails } from "../components/ErrorDetails";
 import { NotFound } from "../pages/NotFound";
-import { isAuth } from "../services/Auth";
+import { useSelector } from "react-redux";
 
-const PrivateRoute = ({ component: Component, ...params }) => (
-  <Route
-    {...params}
-    render={props =>
-      isAuth() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: "./login", state: { from: props.location } }}
-        />
-      )
-    }
-  />
-);
+const PrivateRoute = ({ component: Component, ...params }) => {
+  const isAuth = useSelector(({ auth: { isAuth } }) => isAuth);
+
+  return (
+    <Route
+      {...params}
+      render={props =>
+        isAuth ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "./login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+}
 
 const Routes = () => (
   <>

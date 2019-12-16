@@ -2,19 +2,31 @@ import React from "react";
 import { Navbar, NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { logout, getUser, isAuth } from "../../services/Auth";
+import { logout } from "../../services/Auth";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Creators as Actions } from "../../store/ducks/auth";
+import { useSelector } from "react-redux";
 
 const UserMenu = () => {
+  const isAuth = useSelector(({ auth: { isAuth } }) => isAuth);
+  const user = useSelector(({ auth: { user } }) => user);
+  const dispatch = useDispatch();
+
+  const SetUserLogeOut = () => {
+    dispatch(Actions.setAuth(false));
+    dispatch(Actions.setUser({}));
+  };
+
   const handleLogout = () => {
-    logout();
+    logout(SetUserLogeOut);
   };
 
   const firstName =
-    getUser().user && getUser().user.name && getUser().user.name.split(" ")[0];
+    user && user.name && user.name.split(" ")[0];
 
-  const welcome = isAuth()
-    ? `Bem-vindo ${firstName}! Seu token é: ${getUser().token}`
+  const welcome = isAuth
+    ? `Bem-vindo ${firstName}! Seu token é: ${user.token}`
     : `Faça seu login`;
 
   return (
@@ -26,7 +38,7 @@ const UserMenu = () => {
         title={<FontAwesomeIcon icon={faUser} size="2x" />}
         alignRight
       >
-        {isAuth() ? (
+        {isAuth ? (
           <Link to={"./login"} onClick={handleLogout}>
             Sair
           </Link>

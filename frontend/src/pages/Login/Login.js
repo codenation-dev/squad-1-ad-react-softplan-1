@@ -2,14 +2,27 @@ import React, { useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { loginUser } from "../../services/Api.js";
 import { FormControl } from "../../components/FormControl";
+import { setUser } from "../../services/Auth";
+import { useDispatch } from "react-redux";
+import { Creators as Actions } from "../../store/ducks/auth";
 
 const Login = props => {
   const [validated, setValidated] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const SetUserOnStorage = async (user, setUserLogedIn) => {
+    await setUser(user, setUserLogedIn);
+  };
+
+  const SetUserLogedIn = (user) => {
+    dispatch(Actions.setAuth(true));
+    dispatch(Actions.setUser(user));
+  };
 
   const login = async () => {
-    if (await loginUser(userEmail, userPassword)) {
+    if (await loginUser(userEmail, userPassword, SetUserOnStorage, SetUserLogedIn)) {
       redirect();
     }
   };

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { getUser, setUser } from "./Auth.js";
+import { getUser } from "./Auth.js";
 
 const cache = setupCache({
   maxAge: 15 * 60 * 1000
@@ -40,7 +40,7 @@ const getErrors = async load => {
   }
 };
 
-const getErrorById = async (id, remove) => {
+const getErrorById = async (id) => {
   let config = getConfig();
   try {
     const { data } = await API.get(`/logs/${id}`, config);
@@ -87,12 +87,12 @@ const createNewUser = async (name, email, password) => {
   }
 };
 
-const loginUser = async (email, password) => {
+const loginUser = async (email, password, setUserOnStorage, setUserLogedIn) => {
   let config = getConfig();
   try {
     var payLoad = `{"email": \"${email}\","password": \"${password}\"}`;
-    var { data } = await API.post(`/sessions`, payLoad, config);
-    await setUser(data);
+    var { data } = await API.post(`/sessions`, payLoad, config);    
+    await setUserOnStorage(data, setUserLogedIn);    
     return true;
   } catch (error) {
     console.log("Erro ao fazer o login: ", error);
