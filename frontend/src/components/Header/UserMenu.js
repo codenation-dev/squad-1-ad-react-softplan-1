@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
 import { useSelector } from "react-redux";
 
-const UserMenu = () => {
+const UserMenu = ({ history }) => {
   const isAuth = useSelector(({ auth: { isAuth } }) => isAuth);
   const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
@@ -20,7 +20,13 @@ const UserMenu = () => {
 
   const handleLogout = () => {
     logout(SetUserLogeOut);
+    redirect("./login");
+    
   };
+
+  const redirect = path => {
+    window.location = path;
+  }
 
   const firstName =
     user && user.name && user.name.split(" ")[0];
@@ -39,13 +45,11 @@ const UserMenu = () => {
         alignRight
       >
         {isAuth ? (
-          <Link to={"./login"} onClick={handleLogout}>
-            Sair
-          </Link>
+          <NavDropdown.Item onClick={handleLogout}>Sair</NavDropdown.Item>
         ) : (
           <div className="d-flex flex-column">
-            <Link to={"./login"}>Login</Link>
-            <Link to={"./signup"}>Cadastro</Link>
+            <NavDropdown.Item onClick={() => redirect('./login')}>Login</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => redirect('./signup')}>Cadastro</NavDropdown.Item>
           </div>
         )}
       </NavDropdown>

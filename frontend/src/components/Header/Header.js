@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReact } from "@fortawesome/free-brands-svg-icons";
 import UserMenu from "./UserMenu.js";
 
-const Header = () => (
+const Header = ({ history }) => (
   <Navbar
     bg="dark"
     variant="dark"
@@ -20,7 +20,7 @@ const Header = () => (
       />{" "}
         Central de Erros
     </Navbar.Brand>
-    <UserMenu />
+    <UserMenu history={history}/>
   </Navbar>
 );
 
