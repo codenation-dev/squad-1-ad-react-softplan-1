@@ -5,12 +5,12 @@ const FormControl = props => (
   <Form.Group controlId={props.controlId}>
     <Form.Label>{props.label}</Form.Label>
     <Form.Control
-      {...(props.required == "true" && { required: true })}
+      {...(props.required === "true" && { required: true })}
       type={props.type}
       placeholder={props.placeholder}
       value={props.value}
       onChange={props.onChange}
-      {...(props.autoFocus == "true" && { autoFocus: true })}
+      {...(props.autoFocus === "true" && { autoFocus: true })}
       name={props.name}
     />
     <Form.Control.Feedback>{props.goodFeedback}</Form.Control.Feedback>
