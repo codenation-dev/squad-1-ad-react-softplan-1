@@ -1,6 +1,5 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { getUser } from "./Auth.js";
 
 const cache = setupCache({
   maxAge: 15 * 60 * 1000
@@ -11,10 +10,10 @@ const API = axios.create({
   adapter: cache.adapter
 });
 
-const getConfig = () => {
+const getConfig = (user) => {
   let config = {
     headers: {
-      Authorization: `bearer ${getUser().authtoken}`,
+      Authorization: `bearer ${user.authtoken}`,
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
@@ -25,8 +24,8 @@ const getConfig = () => {
   return config;
 };
 
-const getErrors = async load => {
-  let config = getConfig();
+const getErrors = async (load, user) => {
+  let config = getConfig(user);
   try {
     const { data } = await API.get("/logs/", config);
     data.forEach(item => {
@@ -40,8 +39,8 @@ const getErrors = async load => {
   }
 };
 
-const getErrorById = async (id) => {
-  let config = getConfig();
+const getErrorById = async (id, user) => {
+  let config = getConfig(user);
   try {
     const { data } = await API.get(`/logs/${id}`, config);
     return data;
@@ -51,8 +50,8 @@ const getErrorById = async (id) => {
   }
 };
 
-const deleteError = async (id, remove) => {
-  let config = getConfig();
+const deleteError = async (id, remove, user) => {
+  let config = getConfig(user);
   try {
     await API.delete(`/logs/${id}`, config);
     remove(id);
@@ -63,8 +62,8 @@ const deleteError = async (id, remove) => {
   }
 };
 
-const archiveError = async (id, archive) => {
-  let config = getConfig();
+const archiveError = async (id, archive, user) => {
+  let config = getConfig(user);
   try {
     await API.put(`/logs/${id}/archive`, [], config);
     archive(id);
@@ -76,7 +75,7 @@ const archiveError = async (id, archive) => {
 };
 
 const createNewUser = async (name, email, password) => {
-  let config = getConfig();
+  let config = getConfig({});
   try {
     var payLoad = `{"name": \"${name}\","email": \"${email}\","password": \"${password}\"}`;
     await API.post(`/users`, payLoad, config);
@@ -88,7 +87,7 @@ const createNewUser = async (name, email, password) => {
 };
 
 const loginUser = async (email, password, setUserOnStorage, setUserLogedIn) => {
-  let config = getConfig();
+  let config = getConfig({});
   try {
     var payLoad = `{"email": \"${email}\","password": \"${password}\"}`;
     var { data } = await API.post(`/sessions`, payLoad, config);    
