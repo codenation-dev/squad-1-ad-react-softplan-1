@@ -53,8 +53,8 @@ const Login = props => {
     const { name, value } = event.target;
 
     let actions = {
-      ["email"]: setUserEmail,
-      ["password"]: setUserPassword
+      "email": setUserEmail,
+      "password": setUserPassword
     };
 
     actions[name](value);
@@ -63,11 +63,13 @@ const Login = props => {
   useEffect(() => {
     //console.clear();
     setUserFromStorage(SetUserLogedIn);
-  }, []);
+  }, []);//eslint-disable-line
+  // Desabilitado o eslint pois não vou ficar especificamente a função setUserFromStorage 
 
   useEffect(() => {
     if (isAuth) redirectToHome();
-  }, [isAuth]);
+  }, [isAuth]); //eslint-disable-line
+  // Desabilitado o eslint pois não vou ficar especificamente a função redirectToHome 
 
   const cardSize = {
     width: "250px",

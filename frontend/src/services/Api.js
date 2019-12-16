@@ -77,7 +77,7 @@ const archiveError = async (id, archive, user) => {
 const createNewUser = async (name, email, password) => {
   let config = getConfig({});
   try {
-    var payLoad = `{"name": \"${name}\","email": \"${email}\","password": \"${password}\"}`;
+    var payLoad = `{"name": "${name}","email": "${email}","password": "${password}"}`;
     await API.post(`/users`, payLoad, config);
     return true;
   } catch (error) {
@@ -89,7 +89,7 @@ const createNewUser = async (name, email, password) => {
 const loginUser = async (email, password, setUserOnStorage, setUserLogedIn) => {
   let config = getConfig({});
   try {
-    var payLoad = `{"email": \"${email}\","password": \"${password}\"}`;
+    var payLoad = `{"email": "${email}","password": "${password}"}`;
     var { data } = await API.post(`/sessions`, payLoad, config);    
     await setUserOnStorage(data, setUserLogedIn);    
     return true;

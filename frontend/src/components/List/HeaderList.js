@@ -28,30 +28,30 @@ const HeaderList = () => {
   }
 
   const archiveSelected = () => {
-    filteredErrors.forEach(item => {
-      if (item.selected) {
-        if (confirmAction(`Deseja arquivar o item: ${item._id}`)) {
+    if (confirmAction('Todos os itens selecionados serão arquivados!')) {
+      filteredErrors.forEach(item => {
+        if (item.selected) {
           archiveError(item._id, removeDeleted, user);
-        }
-      }
-    });
+        };
+      });
+    };
   };
 
   const deleteSelected = () => {
-    filteredErrors.forEach(item => {
-      if (item.selected) {
-        if (confirmAction(`Deseja deletar o item: ${item._id}`)) {
+    if (confirmAction('Todos os itens selecionados serão excluídos!')) {
+      filteredErrors.forEach(item => {
+        if (item.selected) {
           deleteError(item._id, removeDeleted, user);
-        }
-      }
-    });
+        };
+      });
+    };
   };
 
   const changeAmbiente = filterAmbiente => {
     const filters = {
-      ["Produção"]: "production",
-      ["Homologação"]: "homologation",
-      ["Dev"]: "development"
+      "Produção": "production",
+      "Homologação": "homologation",
+      "Dev": "development"
     };
     const filter = filters[filterAmbiente];
     let items = allErrors;
