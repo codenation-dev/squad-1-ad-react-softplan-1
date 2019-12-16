@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import SelectedList from "./SelectedList";
-import {
-  Button,
-  ButtonGroup,
-  InputGroup,
-  FormControl,
-  Form
-} from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/error";
 import { useSelector } from "react-redux";
 import { archiveError, deleteError } from "../../services/Api";
+import { MobileView, BrowserView } from "react-device-detect"
+import SearchForm from "./SearchForm";
+import ArchiveDelete from "./ArchiveDelete";
+import SimpleFilters from "./SimpleFilters";
 
 const HeaderList = () => {
   const allErrors = useSelector(({ error: { allErrors } }) => allErrors);
@@ -18,7 +14,6 @@ const HeaderList = () => {
   const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
 
-  const [filtro, setFiltro] = useState("");
   const [searchBy, setSearchBy] = useState("");
 
   const confirmAction = text => window.confirm(text);
@@ -114,63 +109,61 @@ const HeaderList = () => {
     }
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event, filter) => {
     event.preventDefault();
     event.stopPropagation();
-    applyFilter(filtro);
-  };
-
-  const handleChange = event => {
-    event.preventDefault();
-    setFiltro(event.target.value);
+    applyFilter(filter);
   };
 
   return (
     <>
-      <InputGroup>
-        <SelectedList
-          title="Origem"
-          options={["Todas", "Produção", "Homologação", "Dev"]}
-          handleChange={changeAmbiente}
-          classname="pr-1 pb-2"
-        />
-        <SelectedList
-          title="Ordenar por"
-          options={["Data", "Level", "Frequência"]}
-          handleChange={changeOrderBy}
-          classname="pr-1 pb-2"
-        />
-        <SelectedList
-          title="Buscar por"
-          options={["Todos", "Level", "Descrição", "Origem"]}
-          handleChange={changeSearchBy}
-          classname="pr-1 pb-2"
-        />
-        <Form noValidate onSubmit={handleSubmit}>
-          <FormControl
-            placeholder="Filtrar por..."
-            value={filtro}
-            onChange={handleChange}
-          />
-        </Form>
-        <ButtonGroup className="pb-3">
-          <Button variant="light" className="mr-1" onClick={handleSubmit}>
-            Pesquisar
-          </Button>
-        </ButtonGroup>
-      </InputGroup>
-      <ButtonGroup className="mb-3">
-        <Button
-          variant="light"
-          className="mr-1"
-          onClick={archiveSelected}
-        >
-          Arquivar
-        </Button>
-        <Button variant="light" className="mr-1" onClick={deleteSelected}>
-          Apagar
-        </Button>
-      </ButtonGroup>
+      <MobileView>
+        <div className="d-flex flex-column align-items-center">
+          <div className="p2 col-example d-flex flex-row pb-3">
+            <SearchForm 
+              handleSubmit={handleSubmit}
+              changeSearchBy={changeSearchBy}
+            />
+          </div>
+        </div>
+        <div className="d-flex flex-row pb-2 justify-content-between">
+          <div className="p2 col-example d-flex flex-row">
+            <ArchiveDelete 
+              deleteSelected={deleteSelected}
+              archiveSelected={archiveSelected}
+            />
+          </div>
+          <div className="p2 mb-1 col-example d-flex flex-row">
+            <SimpleFilters
+              changeAmbiente={changeAmbiente}
+              changeOrderBy={changeOrderBy}
+              classname="mr-1"
+            />
+          </div>
+        </div>
+      </MobileView>
+      <BrowserView>
+        <div className="d-flex flex-row align-items-center justify-content-between">
+          <div className="p2 col-example d-flex flex-row">
+            <ArchiveDelete 
+              deleteSelected={deleteSelected}
+              archiveSelected={archiveSelected}
+            />
+          </div>
+          <div className="p2 d-flex flex-row pb-3">
+            <SimpleFilters
+              changeAmbiente={changeAmbiente}
+              changeOrderBy={changeOrderBy}
+              classname="mr-1"
+            />
+            <SearchForm 
+              handleSubmit={handleSubmit}
+              changeSearchBy={changeSearchBy}
+            />
+          </div>
+          
+        </div>
+      </BrowserView>
     </>
   );
 };
