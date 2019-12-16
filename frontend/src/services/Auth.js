@@ -15,4 +15,15 @@ const logout = setUserLogeOut => {
   setUserLogeOut();
 };
 
-export { setUser, logout };
+const setUserFromStorage = setUserLogedIn => {
+  const data = localStorage.getItem(USER_TAG);
+  const token = localStorage.getItem(TOKEN_TAG);
+  if (data && token) {
+    let user = data && JSON.parse(data);
+    user.authtoken = token;
+    user.token = token && token.substring(token.lastIndexOf(".") + 1);
+    setUserLogedIn(user);
+  }
+};
+
+export { setUser, logout, setUserFromStorage };

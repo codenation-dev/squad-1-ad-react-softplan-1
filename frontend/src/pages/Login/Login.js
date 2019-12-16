@@ -1,33 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { loginUser } from "../../services/Api.js";
 import { FormControl } from "../../components/FormControl";
-import { setUser } from "../../services/Auth";
+import { setUser, setUserFromStorage } from "../../services/Auth";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
+import { useSelector } from "react-redux";
 
 const Login = props => {
   const [validated, setValidated] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const isAuth = useSelector(({ auth: { isAuth } }) => isAuth);
   const dispatch = useDispatch();
 
   const SetUserOnStorage = async (user, setUserLogedIn) => {
     await setUser(user, setUserLogedIn);
   };
 
-  const SetUserLogedIn = (user) => {
+  const SetUserLogedIn = user => {
     dispatch(Actions.setAuth(true));
     dispatch(Actions.setUser(user));
   };
 
   const login = async () => {
-    if (await loginUser(userEmail, userPassword, SetUserOnStorage, SetUserLogedIn)) {
-      redirect();
+    if (
+      await loginUser(userEmail, userPassword, SetUserOnStorage, SetUserLogedIn)
+    ) {
+      redirectToHome();
     }
   };
 
-  const redirect = () => {
+  const redirectToHome = () => {
     props.history.push("/");
   };
 
@@ -54,6 +58,16 @@ const Login = props => {
 
     actions[name](value);
   };
+
+  useEffect(() => {
+    console.log("aqui");
+    setUserFromStorage(SetUserLogedIn);
+  }, []);
+
+  useEffect(() => {
+    console.log("aqui ó");
+    if (isAuth) redirectToHome();
+  }, [isAuth]);
 
   return (
     <div className="p-5 d-flex justify-content-center align-items-center">
