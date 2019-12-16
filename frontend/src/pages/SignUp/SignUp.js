@@ -37,9 +37,9 @@ const SignUp = props => {
     const { name, value } = event.target;
 
     let actions = {
-      ["nome"]: setUserName,
-      ["email"]: setUserEmail,
-      ["password"]: setUserPassword
+      "nome": setUserName,
+      "email": setUserEmail,
+      "password": setUserPassword
     };
 
     actions[name](value);

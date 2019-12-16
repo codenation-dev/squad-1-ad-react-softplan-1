@@ -53,8 +53,8 @@ const Login = props => {
     const { name, value } = event.target;
 
     let actions = {
-      ["email"]: setUserEmail,
-      ["password"]: setUserPassword
+      "email": setUserEmail,
+      "password": setUserPassword
     };
 
     actions[name](value);
