@@ -1,9 +1,9 @@
 import React from "react";
 import { Navbar, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { logout } from "../../services/Auth";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
 import { useSelector } from "react-redux";
@@ -30,7 +30,7 @@ const UserMenu = () => {
     : `Faça seu login`;
 
   return (
-    <>
+    <div className="d-flex flex-row justify-content-end align-items-center">
       <Navbar.Text className="d-md-block d-lg-block d-none d-xl-block">
         {welcome}
       </Navbar.Text>
@@ -39,17 +39,15 @@ const UserMenu = () => {
         alignRight
       >
         {isAuth ? (
-          <Link to={"./login"} onClick={handleLogout}>
-            Sair
-          </Link>
+           <Link to={"./login"} onClick={handleLogout} className="px-4 p-2">Sair</Link>
         ) : (
           <div className="d-flex flex-column">
-            <Link to={"./login"}>Login</Link>
-            <Link to={"./signup"}>Cadastro</Link>
+            <Link to={"./login"} className="px-4 p-2">Login</Link>
+            <Link to={"./signup"} className="px-4 p-2">Cadastro</Link>
           </div>
         )}
       </NavDropdown>
-    </>
+    </div>
   );
 };
 

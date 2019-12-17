@@ -1,9 +1,9 @@
 import React from "react";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReact } from "@fortawesome/free-brands-svg-icons";
-import { isMobile } from "react-device-detect";
 import UserMenu from "./UserMenu.js";
+import { Link } from "react-router-dom";
 
 const Header = () => (
   <Navbar
@@ -11,23 +11,19 @@ const Header = () => (
     variant="dark"
     sticky="top"
     expand="lg"
-    className="align-items-center"
+    className="d-flex align-items-center justify-content-between"
   >
-    <Navbar.Brand href="/">
-      <FontAwesomeIcon
-        icon={faReact}
-        size="2x"
-        className="d-inline-block align-middle"
-      />{" "}
-      Central de Erros
+    <Navbar.Brand>
+      <Link to="/">
+        <FontAwesomeIcon
+          icon={faReact}
+          size="2x"
+          className="d-inline-block align-middle"
+        />{" "}
+        Central de Erros
+      </Link>
     </Navbar.Brand>
-    {isMobile ? (
-      <UserMenu />
-    ) : (
-      <Container className="justify-content-end">
-        <UserMenu />
-      </Container>
-    )}
+    <UserMenu />
   </Navbar>
 );
 

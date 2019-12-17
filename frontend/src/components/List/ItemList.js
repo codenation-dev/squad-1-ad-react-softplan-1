@@ -34,7 +34,7 @@ const Item = props => {
         />
       </th>
       <td onClick={goToErrorPage}>{props.item.level}</td>
-      <td onClick={goToErrorPage} className="">
+      <td onClick={goToErrorPage} className="" style={{wordBreak: "break-all"}}>
         <div>{props.item.description.title}</div>
         <div>{props.item.origin}</div>
         <div>{formatDate(props.item.lastOccurrence.date)}</div>
