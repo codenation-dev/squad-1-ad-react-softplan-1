@@ -25,7 +25,6 @@ const SearchForm = () => {
     let items = []
     if (filter) {
       const pattern = new RegExp(filter.trim(), "i");
-      console.log(allErrors)
       switch (searchBy) {
         case "Level":
           items = allErrors.filter(item => item.level.match(pattern));
@@ -36,19 +35,19 @@ const SearchForm = () => {
         case "Descrição":
           items = allErrors.filter(item => {
             return (
-              item.description && item.description.title.match(pattern) ||
-              item.description && item.description.stacktrace.match(pattern)
+              (item.description && item.description.title.match(pattern)) ||
+              (item.description && item.description.stacktrace.match(pattern))
             );
           });
           break;
         default:
           items = allErrors.filter(item => {
             return (
-              item.description && item.description.title.match(pattern) ||
-              item.description && item.description.stacktrace.match(pattern) ||
-              item.environment.match(pattern) ||
-              item.level.match(pattern) ||
-              item.occurrences.toString().match(pattern)
+              (item.description && item.description.title.match(pattern)) ||
+              (item.description && item.description.stacktrace.match(pattern)) ||
+              (item.environment.match(pattern)) ||
+              (item.level.match(pattern)) ||
+              (item.occurrences.toString().match(pattern))
             );
           });
       }
