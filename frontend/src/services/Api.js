@@ -51,15 +51,12 @@ const getErrorById = async (id, user) => {
 };
 
 const getUserById = async (id, user) => {
-  console.log('getUserById')
   let config = getConfig(user);
   try {
-    console.log('getUserById aaaaaa')
     const { data } = await API.get(`/users/${id}/detail`, config);
-    console.log(data)
     return data;
   } catch (error) {
-    console.log("Erro ao buscar os detalhes do erro: ", error);
+    console.log("Erro ao buscar os detalhes do usuario: ", error);
     return [];
   }
 };
